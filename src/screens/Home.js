@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import FormButton from '../components/FormButton';
 
-const Home = ({ navigation }) => {
+const HomeScreen = ({ navigation }) => {
     return (
         <View>
             <Text>ESTAMOS EN HOME LPTM   </Text>
@@ -17,4 +17,4 @@ const Home = ({ navigation }) => {
         </View>
     );
 };
-export default Home;
+export default HomeScreen;
