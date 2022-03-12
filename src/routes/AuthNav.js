@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
-import { LoginScreen, SingUpScreen, HomeScreen } from "../screens";
+import { LoginScreen, SingUpScreen } from "../screens";
 import { Text } from 'react-native';
 
 const { Navigator, Screen } = createStackNavigator();
@@ -21,15 +21,8 @@ const AuthNav = () => {
                     headerTitle: 'Crear cuenta',
                     headerTitleAlign: 'center',
                 }} />
-            <Screen 
-                name="Home"
-                component={HomeScreen}
-                options={{
-                    headerTitle: 'ESTAMOS EN HOME LPTM',
-                }}
-            />
         </Navigator>
-    )
+    );
 }
 
 export default AuthNav;

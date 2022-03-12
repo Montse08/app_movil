@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 import Colors from "../utils/Colors";
 
 
-const login = ({ navigation }) => {
+const Login = ({ navigation }) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     return (
@@ -36,7 +36,7 @@ const login = ({ navigation }) => {
             />
             <FormButton
                 buttonTitle="Entrar"
-                onPress={() => navigation.navigate('Home')}
+                onPress={() => navigation.navigate('Dashboard')}
                 // onPress={() => alert('AUCH')}
             />
             <TouchableOpacity
@@ -65,7 +65,7 @@ const login = ({ navigation }) => {
 
 };
 
-export default login;
+export default Login;
 
 const styles = StyleSheet.create({
     container: {
