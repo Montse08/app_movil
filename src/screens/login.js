@@ -3,6 +3,7 @@ import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import Forminput from "../components/Forminput";
 import FormButton from "../components/FormButton";
 import SocialButton from "../components/SocialButton";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from "../navigation/AuthProvider.android";
 import Footer from "../components/Footer";
 import Colors from "../utils/Colors";
@@ -11,6 +12,16 @@ import Colors from "../utils/Colors";
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+
+    const userType = async () => {
+        try {
+            await AsyncStorage.setItem('user_type', 'tecnico');
+            navigation.navigate('Dashboard');
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Image
@@ -36,8 +47,7 @@ const Login = ({ navigation }) => {
             />
             <FormButton
                 buttonTitle="Entrar"
-                onPress={() => navigation.navigate('Dashboard')}
-                // onPress={() => alert('AUCH')}
+                onPress={async () => userType()}
             />
             <TouchableOpacity
                 style={styles.forgotButton} onPress={() => { }}>
