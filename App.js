@@ -1,6 +1,5 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import login from "./src/screens/login";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AuthNav, DashboardNav } from "./src/routes";
 
