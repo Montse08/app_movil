@@ -5,3 +5,8 @@ export { default as AppointmentsScreen } from './Appointments';
 export { default as ContactScreen } from './Contact';
 export { default as ScheduledAppointmentsScreen } from './ScheduledAppointments';
 export { default as ProphileScreen } from './Prophile';
+export { default as ServicesScreen } from './Services';
+export { default as ServiceOrdenScreen } from './ServiceOrden';
+export { default as MileageScreen } from './Mileage';
+export { default as GasolineScreen } from './Gasoline';
+export { default as ProfileTechnicalScreen } from './ProfileTechnical';
