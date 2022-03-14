@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Title, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, Button } from 'react-native-elements';
+import HeaderScreenComponent from '../components/HeaderScreen';
 import Colors from '../utils/Colors';
 
 
@@ -8,10 +9,58 @@ import Colors from '../utils/Colors';
 const HomeScreen = ({ navigation }) => {
     return (
         <ScrollView>
-            <Text style={styles.textTitulo}>Inicio</Text>
+            <HeaderScreenComponent title="Inicio" />
             <View style={styles.container}>
                 <Card>
-                    <Card.Title>CONTROL DE TERMITAS</Card.Title>
+                    <Card.Title style={styles.titleCard}>CONTROL DE TERMITAS</Card.Title>
+                    <Card.Divider />
+                    <Card.Image
+                        style={{ padding: 0 }}
+                        source={require('../assets/termitas.jpg')}
+                    />
+                    <Text style={styles.text}>
+                        Los isópteros son un infraorden de insectos
+                        neópteros, conocidos vulgarmente como termitas,
+                        termes, turiros o comejenes y también como hormigas
+                        blancas por su semejanza superficial con las hormigas.
+                    </Text>
+                    {/* <Button
+                        buttonStyle={{
+                            borderRadius: 0,
+                            marginLeft: 0,
+                            marginRight: 0,
+                            marginBottom: 0,
+                            backgroundColor: Colors.PRIMARY_COLOR_NARANJALOGO,
+                        }}
+                        title="VIEW NOW"
+                    /> */}
+                </Card>
+                <Card>
+                    <Card.Title style={styles.titleCard}>CONTROL DE TERMITAS</Card.Title>
+                    <Card.Divider />
+                    <Card.Image
+                        style={{ padding: 0 }}
+                        source={require('../assets/termitas.jpg')}
+                    />
+                    <Text style={styles.text}>
+                        Los isópteros son un infraorden de insectos
+                        neópteros, conocidos vulgarmente como termitas,
+                        termes, turiros o comejenes y también como hormigas
+                        blancas por su semejanza superficial con las hormigas.
+                    </Text>
+                    {/* <Button
+                        buttonStyle={{
+                            borderRadius: 0,
+                            marginLeft: 0,
+                            marginRight: 0,
+                            marginBottom: 0,
+                            backgroundColor: Colors.PRIMARY_COLOR_NARANJALOGO,
+                        }}
+                        title="VIEW NOW"
+                    /> */}
+                </Card>
+                <Card>
+                    <Card.Title style={styles.titleCard}>CONTROL DE TERMITAS</Card.Title>
                     <Card.Divider />
                     <Card.Image
                         style={{ padding: 0 }}
@@ -35,55 +84,7 @@ const HomeScreen = ({ navigation }) => {
                     />
                 </Card>
                 <Card>
-                    <Card.Title>CONTROL DE TERMITAS</Card.Title>
-                    <Card.Divider />
-                    <Card.Image
-                        style={{ padding: 0 }}
-                        source={require('../assets/termitas.jpg')}
-                    />
-                    <Text style={styles.text}>
-                        Los isópteros son un infraorden de insectos
-                        neópteros, conocidos vulgarmente como termitas,
-                        termes, turiros o comejenes y también como hormigas
-                        blancas por su semejanza superficial con las hormigas.
-                    </Text>
-                    <Button
-                        buttonStyle={{
-                            borderRadius: 0,
-                            marginLeft: 0,
-                            marginRight: 0,
-                            marginBottom: 0,
-                            backgroundColor: Colors.PRIMARY_COLOR_NARANJALOGO,
-                        }}
-                        title="VIEW NOW"
-                    />
-                </Card>
-                <Card>
-                    <Card.Title>CONTROL DE TERMITAS</Card.Title>
-                    <Card.Divider />
-                    <Card.Image
-                        style={{ padding: 0 }}
-                        source={require('../assets/termitas.jpg')}
-                    />
-                    <Text style={styles.text}>
-                        Los isópteros son un infraorden de insectos
-                        neópteros, conocidos vulgarmente como termitas,
-                        termes, turiros o comejenes y también como hormigas
-                        blancas por su semejanza superficial con las hormigas.
-                    </Text>
-                    <Button
-                        buttonStyle={{
-                            borderRadius: 0,
-                            marginLeft: 0,
-                            marginRight: 0,
-                            marginBottom: 0,
-                            backgroundColor: Colors.PRIMARY_COLOR_NARANJALOGO,
-                        }}
-                        title="VIEW NOW"
-                    />
-                </Card>
-                <Card>
-                    <Card.Title>CONTROL DE TERMITAS</Card.Title>
+                    <Card.Title style={styles.titleCard}>CONTROL DE TERMITAS</Card.Title>
                     <Card.Divider />
                     <Card.Image
                         style={{ padding: 0 }}
@@ -119,6 +120,17 @@ const styles = StyleSheet.create({
         marginTop: 30,
         resizeMode: 'contain',
     },
+    titleCard: {
+        fontSize: 15,
+        color: '#000',
+        fontWeight: 'bold',  
+    },
+
+    text: {
+        fontSize: 14,
+        padding: 6,
+        textAlign: 'justify'
+    },
 
     container: {
         marginBottom: 10,
@@ -131,6 +143,6 @@ const styles = StyleSheet.create({
         marginBottom: -20,
         color: '#000',
         fontWeight: 'bold'
-      },
+    },
 
 });

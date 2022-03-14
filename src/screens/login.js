@@ -4,9 +4,7 @@ import Forminput from "../components/Forminput";
 import FormButton from "../components/FormButton";
 import SocialButton from "../components/SocialButton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AuthContext } from "../navigation/AuthProvider.android";
-import Footer from "../components/Footer";
-import Colors from "../utils/Colors";
+
 
 
 const Login = ({ navigation }) => {
@@ -15,7 +13,7 @@ const Login = ({ navigation }) => {
 
     const userType = async () => {
         try {
-            await AsyncStorage.setItem('user_type', 'tecnico');
+            await AsyncStorage.setItem('user_type', 'cliente');
             navigation.navigate('Dashboard');
         } catch (error) {
             console.log(error);

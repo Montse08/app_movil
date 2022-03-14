@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Colors from "../utils/Colors";
 import { windowHeight } from "../utils/Dimentions";
 import { windowWidth } from "../utils/Dimentions";
 
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: '100%',
         heigth: windowHeight / 15,
-        backgroundColor: '#ff0000',
+        backgroundColor: Colors.PRIMARY_COLOR_NARANJALOGO,
         padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
