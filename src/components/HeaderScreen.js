@@ -6,7 +6,15 @@ const HeaderScreenComponent = ({ title }) => {
     return (
         <View style={styles.view}>
             <Text style={styles.title}>{title}</Text>
+            {/* <View
+                style={{
+                    borderBottomColor: 'black',
+                    borderBottomWidth: 1,
+                    width: '100%'
+                }}
+            /> */}
         </View>
+
     );
 }
 
