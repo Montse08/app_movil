@@ -1,14 +1,24 @@
 import React from "react";
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Colors from "../utils/Colors";
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { windowHeight } from "../utils/Dimentions";
-import { windowWidth } from "../utils/Dimentions";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-
-const FormButton = ({ buttonTitle, ...rest }) => {
+const FormButton = ({ buttonTitle, stylesText, stylesContainer, icon, size, color, ...rest }) => {
     return (
-        <TouchableOpacity style={styles.buttonContainer}{...rest}>
-            <Text style={styles.buttonText}>{buttonTitle}</Text>
+        <TouchableOpacity style={[styles.buttonContainer, stylesContainer]}{...rest}>
+            {buttonTitle && icon ? (
+                <View>
+                    <Text style={[styles.buttonText, stylesText]}>{buttonTitle}</Text>
+                </View>
+            ) : (
+                <View>
+                    {buttonTitle ? (
+                        <Text style={[styles.buttonText, stylesText]}>{buttonTitle}</Text>
+                    ) : (
+                        <FontAwesome name={icon} size={size} color={color} />
+                    )}
+                </View>
+            )}
         </TouchableOpacity>
     );
 };
