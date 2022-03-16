@@ -10,3 +10,5 @@ export { default as ServiceOrdenScreen } from './ServiceOrden';
 export { default as MileageScreen } from './Mileage';
 export { default as GasolineScreen } from './Gasoline';
 export { default as ProfileTechnicalScreen } from './ProfileTechnical';
+export { default as WelcomeTechnicalScreen } from './WelcomeTechnical';
+export { default as ServiceOrderFormScreen } from './ServiceOrderForm';

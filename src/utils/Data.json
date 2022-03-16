@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "title": "Desinfección",
+        "time": "9:00 am",
+        "iconColor": "blue",
+        "description": "Av. San Ignacio, Calle 32",
+        "timeService": "",
+        "iconBorderColor": "#E3E5FD"
+    },
+    {
+        "id": 2,
+        "title": "Desinfección",
+        "time": "10:00 am",
+        "iconColor": "red",
+        "description": "Av. San Ignacio, Calle 32",
+        "timeService": "",
+        "iconBorderColor": "#FDE3E3"
+    },
+    {
+        "id": 3,
+        "title": "Desinfección",
+        "time": "11:00 am",
+        "iconColor": "red",
+        "description": "Av. San Ignacio, Calle 32",
+        "timeService": "",
+        "iconBorderColor": "#FDE3E3"
+    },
+    {
+        "id": 4,
+        "title": "Desinfección",
+        "time": "12:00 pm",
+        "iconColor": "red",
+        "description": "Av. San Ignacio, Calle 32",
+        "timeService": "",
+        "iconBorderColor": "#FDE3E3"
+    },
+    {
+        "id": 5,
+        "title": "Desinfección",
+        "time": "1:00 pm",
+        "iconColor": "red",
+        "description": "Av. San Ignacio, Calle 32",
+        "timeService": "",
+        "iconBorderColor": "#FDE3E3"
+    },
+    {
+        "id": 6,
+        "title": "Desinfección",
+        "time": "2:00 pm",
+        "iconColor": "red",
+        "description": "Av. San Ignacio, Calle 32",
+        "timeService": "",
+        "iconBorderColor": "#FDE3E3"
+    },
+    {
+        "id": 7,
+        "title": "Desinfección",
+        "time": "3:00 pm",
+        "iconColor": "red",
+        "description": "Av. San Ignacio, Calle 32",
+        "timeService": "",
+        "iconBorderColor": "#FDE3E3"
+    },
+    {
+        "id": 8,
+        "title": "Desinfección",
+        "time": "4:00 pm",
+        "iconColor": "red",
+        "description": "Av. San Ignacio, Calle 32",
+        "timeService": "",
+        "iconBorderColor": "#FDE3E3"
+    }
+]
