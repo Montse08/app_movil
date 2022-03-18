@@ -23,7 +23,7 @@ export const MenuClient = [
     },
     {
         'name': 'Prophile',
-        'component': Screens.ProphileScreen,
+        'component': Screens.ProfileScreen,
         'icon': 'user-circle-o'
     }
 ]

@@ -32,7 +32,7 @@ export default SocialButton;
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        marginTop: 10,
+        marginTop: 1,
         width: '100%',
         heigth: windowHeigth / 15,
         padding: 10,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         borderRadius: 3,
     },
     iconWrapper: {
-        width: 30,
+        width: 180,
         justifyContent: 'center',
         alingItems: 'center',
     },

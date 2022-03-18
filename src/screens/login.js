@@ -4,6 +4,7 @@ import Forminput from "../components/Forminput";
 import FormButton from "../components/FormButton";
 import SocialButton from "../components/SocialButton";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Footer from "../components/Footer"
 
 
 
@@ -29,7 +30,7 @@ const Login = ({ navigation }) => {
             <Text style={styles.text}></Text>
             <Forminput
                 labelValue={email}
-                onChangeText={(userEmail) => setEmail(userEmail)}
+                onChangeText={() => setEmail(userEmail)}
                 placeholderText="Email"
                 iconType="envelope"
                 keyboardType="email-address"
@@ -52,11 +53,13 @@ const Login = ({ navigation }) => {
                 <Text style={styles.navButtonText}>¿Olvidaste tu contraseña?</Text>
             </TouchableOpacity>
             <View>
-                <SocialButton
-                    buttonTitle="Sign In with Google"
-                    btnType="google"
-                    color="#de4d41"
-                    backgroundColor="#f5e7ea"
+                <FormButton
+                    buttonTitle="Iniciar Sesión con Google"
+                    icon="google"
+                    size={22}
+                    color="#fff"
+                    stylesContainer={{ backgroundColor: "#de4d41" }}
+                    stylesText={{ marginLeft: 20 }}
                 />
             </View>
             <TouchableOpacity
@@ -68,7 +71,7 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
             {/* <Footer /> */}
         </View>
-        
+
     );
 
 };
@@ -80,13 +83,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 25,
-        paddingTop: 230,
+        height: '100%',
+        padding: 25
     },
     logo: {
         height: 90,
         width: 350,
-        marginTop: -150,
+        // marginTop: -150,
         resizeMode: 'contain',
         // backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO
     },
@@ -104,7 +107,7 @@ const styles = StyleSheet.create({
         marginVertical: 35,
     },
     navButtonText: {
-        fontSize: 18,   
+        fontSize: 18,
         fontWeight: '500',
         color: '#1b1464',
         fontFamily: 'Lato-Regular'

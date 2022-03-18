@@ -1,6 +1,5 @@
 import React from "react";
 import { View, TextInput, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Colors from "../utils/Colors";
 import { windowHeight } from "../utils/Dimentions";
 import { windowWidth } from "../utils/Dimentions";
@@ -11,14 +10,14 @@ const Forminput = ({ labelValue, placeholderText, iconType, ...rest }) => {
 
     return (
         <View style={styles.inputContainer}>
-            <View style={styles.iconStyle}>
-                <Icon name={iconType} size={25} color="#666" iconType="FontAwesome" />
-            </View>
             <TextInput
+                multiline={true}
+                // numberOfLines={4}
                 value={labelValue}
                 style={styles.input}
-                numberOfLines={1}
-                placeholder="PRUEBA"
+                // onChangeText={text => onChangeText(text)}
+                placeholder=""
+                // maxLength={50}
                 placeholderTextColor="#666"
                 {...rest}
             />
@@ -32,8 +31,8 @@ const styles = StyleSheet.create({
     inputContainer: {
         marginTop: 5,
         marginBottom: 10,
-        width: '100%',
-        height: windowHeight / 15,
+        width: 324,
+        height: 110,
         borderColor: '#ccc',
         borderRadius: 3,
         borderWidth: 1,
@@ -41,24 +40,15 @@ const styles = StyleSheet.create({
         aligItems: 'center',
         backgroundColor: '#fff'
     },
-    iconStyle: {
-        padding: 10,
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRightColor: '#ccc',
-        borderRightWidth: 1,
-        width: 50,
-    },
     input: {
         padding: 1,
         flex: 1,
         fontSize: 16,
         fontFamily: 'Lato-Regular',
         color: '#333',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // //        backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO,
     },
     inputField: {
         padding: 10,
