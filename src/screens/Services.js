@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { HeaderScreen } from '../components';
 import { Card } from 'react-native-elements';
@@ -7,37 +7,27 @@ import { Timeline } from 'react-native-just-timeline';
 import FormButton from '../components/FormButton';
 import Modal from 'react-native-modal';
 import Colors from '../utils/Colors';
-import moment from "moment";
+import moment from 'moment';
+import { Data } from '../utils';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
-const ServicesScreen = () => {
-    const timerRef = useRef(null);
+const ServicesScreen = ({ navigation }) => {
+    const [dataCopy, setDataCopy] = useState(Data);
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalNota, setModalNota] = useState(false);
+    const [alertMarcar, setAlertMarcar] = useState(false);
+    const [alertFinalizar, setAlertFinalizar] = useState(false);
+    const [alertCancelar, setAlertCancelar] = useState(false);
+    const [alertNota, setAlertNota] = useState(false);
+    const [stateCronometro, setStateCronometro] = useState('neutral');
     const [selectedValue, setSelectedValue] = useState("d");
-    const [stateCronometro, setStateCronometro] = useState(false);
-    const [segundos, setSegundos] = useState(59);
-    const [minutos, setMinutos] = useState(59);
-    const [horas, setHoras] = useState(1);
+    const [nota, setNota] = useState('');
+    const [segundos, setSegundos] = useState(0);
+    const [minutos, setMinutos] = useState(0);
+    const [horas, setHoras] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const [intervalo, setIntervalo] = useState();
-    const intervalRef = useRef();
-
-    // const data = [
-    //     { time: '09:00', title: 'Event 1', description: 'Event 1 Description' },
-    //     { time: '10:45', title: 'Event 2', description: 'Event 2 Description' },
-    //     { time: '12:00', title: 'Event 3', description: 'Event 3 Description' },
-    //     { time: '14:00', title: 'Event 4', description: 'Event 4 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' },
-    //     { time: '16:30', title: 'Event 5', description: 'Event 5 Description' }
-    // ];
+    const [data, setData] = useState();
 
     const countHoras = () => {
         setHoras((prevHoras) => {
@@ -49,14 +39,13 @@ const ServicesScreen = () => {
         setMinutos((prevMinutos) => {
             if (prevMinutos + 1 == 60) {
                 countHoras();
-                return 0;
+                return - .5;
             }
             return prevMinutos + .5;
         });
     }
 
     const countSegundos = () => {
-        console.log(segundos);
         setSegundos((prevSegundos) => {
             if (prevSegundos + 1 == 60) {
                 countMinutos();
@@ -67,58 +56,181 @@ const ServicesScreen = () => {
     }
 
     const start = () => {
-        console.log('Start');
-        setStateCronometro(!stateCronometro);
+        setStateCronometro('start');
+        setIntervalo(setInterval(() => countSegundos(), 1000));
+    }
+
+    const pause = () => {
+        setStateCronometro('pause');
+        clearInterval(intervalo);
+    }
+
+    const restart = () => {
+        setSegundos(0);
+        setMinutos(0);
+        setHoras(0);
+        setStateCronometro('start');
         setIntervalo(setInterval(() => countSegundos(), 1000));
     }
 
     const stop = () => {
-        console.log('Stop');
-        setStateCronometro(!stateCronometro);
+        setStateCronometro('stop');
         clearInterval(intervalo);
     }
 
-    const renderContent = () => {
+    const clear = () => {
+        if (stateCronometro == 'start') {
+            clearInterval(intervalo);
+        }
+        setModalVisible(false)
+        setSegundos(0);
+        setMinutos(0);
+        setHoras(0);
+        setStateCronometro('neutral');
+    }
+
+    const save = () => {
+        let serviceTime = '';
+        if (horas < 10) {
+            serviceTime = `0${horas}:`
+        } else {
+            serviceTime = `${horas}:`
+        }
+        if (minutos < 10) {
+            serviceTime = `${serviceTime}0${minutos}:`
+        } else {
+            serviceTime = `${serviceTime}${minutos}:`
+        }
+        if (segundos < 10) {
+            serviceTime = `${serviceTime}0${segundos}`
+        } else {
+            serviceTime = `${serviceTime}${segundos}`
+        }
+        let dataCopy_ = dataCopy;
+        let info = [];
+        dataCopy_[selectedIndex] = {
+            "id": dataCopy[selectedIndex].id,
+            "title": dataCopy[selectedIndex].title,
+            "time": dataCopy[selectedIndex].time,
+            "iconColor": dataCopy[selectedIndex].iconColor,
+            "description": dataCopy[selectedIndex].description,
+            "timeService": serviceTime,
+            "iconBorderColor": dataCopy[selectedIndex].iconBorderColor
+        }
+        setDataCopy(dataCopy_);
+        dataCopy.forEach((element) => {
+            info.push({
+                title: () => renderTitle(element.time, element.title, element.iconColor),
+                description: () => renderDescription(element.description, element.id, element.timeService),
+                icon: {
+                    style: {
+                        backgroundColor: element.iconColor,
+                        borderColor: element.iconBorderColor
+                    }
+                }
+            });
+        });
+        setData(info);
+        clear();
+    }
+
+    const renderDescription = (description, index, time) => {
         return (
             <View>
-                <Text style={{ color: '#000', marginTop: 5 }}>Av. San Ignacio, Calle 32</Text>
-                <FormButton buttonTitle="Tomar tiempo del servicio"
-                    onPress={() => setModalVisible(!modalVisible)}
-                    stylesText={{ fontSize: 15 }}
-                    stylesContainer={{ height: 40 }} />
+                <Text style={{ color: '#000', marginTop: 5 }}>
+                    {description}
+                </Text>
+                {time == '' ? (
+                    <FormButton buttonTitle="Tomar tiempo del servicio"
+                        onPress={() => {
+                            setModalVisible(true);
+                            setSelectedIndex(index - 1);
+                        }}
+                        stylesText={{ fontSize: 15 }}
+                        stylesContainer={{ height: 40, position: 'absolute', right: 0, left: 0, marginTop: 30 }} />
+                ) : (
+                    <Text style={{ color: '#000', marginTop: 5 }}>Tiempo del servicio: {time}</Text>
+                )}
+                <View style={{ flexDirection: 'row', width: 256, marginTop: time == '' ? 45 : 0, alignContent: 'space-between' }}>
+                    <FormButton
+                        buttonTitle="Marcar"
+                        stylesContainer={{ width: 120, height: 40 }}
+                        stylesText={{ fontSize: 15 }}
+                        onPress={() => {
+                            setAlertMarcar(true);
+                            setSelectedIndex(index - 1);
+                        }} />
+                    <FormButton
+                        buttonTitle="Reprogramar"
+                        stylesContainer={{ width: 120, height: 40, right: 5, position: 'absolute' }}
+                        stylesText={{ fontSize: 15 }}
+                        disabled={time == '' ? false : true} />
+                </View>
             </View>
         )
     }
 
-    const data = [
-        {
-            title: () => (
-                <View>
-                    <Text style={{ fontSize: 10, color: '#999', marginBottom: 7 }}>
-                        Mar 7, 2020 9:00 AM
-                    </Text>
-                    <Text style={{ marginBottom: 0, color: '#d2584b', fontWeight: 'bold' }}>
-                        Item Deleted Event
-                    </Text>
-                </View>
-            ),
-            description: () => renderContent(),
-            icon: {
-                style: {
-                    backgroundColor: 'red'
+    const renderTitle = (time, title, textColor) => {
+        return (
+            <View>
+                <Text style={{ fontSize: 12, color: '#999', marginBottom: 7 }}>
+                    {time}
+                </Text>
+                <Text style={{ marginBottom: 0, color: textColor, fontWeight: 'bold', fontSize: 18 }}>
+                    {title}
+                </Text>
+            </View>
+        )
+    }
+
+    const renderData = () => {
+        let info = [];
+        dataCopy.forEach(element => {
+            info.push({
+                title: () => renderTitle(element.time, element.title, element.iconColor),
+                description: () => renderDescription(element.description, element.id, element.timeService),
+                icon: {
+                    style: {
+                        backgroundColor: element.iconColor,
+                        borderColor: element.iconBorderColor
+                    }
                 }
-            }
-        },
-    ];
+            });
 
+        });
+        setData(info);
+    }
 
+    useEffect(() => {
+        renderData();
+    }, []);
+
+    const alert = (show, title, message, confirmText, cancelText, showCancelButton, showConfirmButton, onCancelPressed, onConfirmPressed) => {
+        return (
+            <AwesomeAlert
+                show={show}
+                title={title}
+                message={message}
+                showCancelButton={showCancelButton}
+                showConfirmButton={showConfirmButton}
+                confirmText={confirmText}
+                cancelText={cancelText}
+                closeOnTouchOutside={false}
+                closeOnHardwareBackPress={false}
+                onCancelPressed={onCancelPressed}
+                onConfirmPressed={onConfirmPressed}
+                messageStyle={{ textAlign: 'center' }} />
+        );
+    }
 
     return (
         <View style={styles.content}>
             <HeaderScreen title="Servicios"></HeaderScreen>
             <Card>
-                <Text style={styles.text}>Miércoles 12 Enero 2022</Text>
-                <Text style={{ color: '#000', fontSize: 16, marginTop: 15, fontWeight: 'bold' }}>RENAULT/ UTZ-3456</Text>
+                <Text style={styles.text}>
+                    {moment(new Date()).locale('es-mx').format('dddd DD [de] MMMM [de] YYYY')}
+                </Text>
+                <Text style={{ color: '#000', fontSize: 16, marginTop: 15, fontWeight: 'bold' }}>Automovil: RENAULT/ UTZ-3456</Text>
                 <Picker
                     selectedValue={selectedValue}
                     style={{ width: '100%', color: '#000' }}
@@ -146,27 +258,151 @@ const ServicesScreen = () => {
                                     {minutos < 10 ? `0${minutos}` : minutos}:
                                     {segundos < 10 ? `0${segundos}` : segundos}
                                 </Text>
+                                {stateCronometro == 'neutral' || stateCronometro == 'pause' ? (
+                                    <FormButton
+                                        icon='play-circle-o'
+                                        size={22}
+                                        color='#fff'
+                                        stylesContainer={{ height: 45, width: 40, right: 0, position: 'absolute', backgroundColor: '#038513' }}
+                                        onPress={() => start()} />
+                                ) : null}
+                                {stateCronometro == 'start' ? (
+                                    <FormButton
+                                        icon='stop-circle-o'
+                                        size={22}
+                                        color='#fff'
+                                        stylesContainer={{ height: 45, width: 40, right: 0, position: 'absolute', backgroundColor: Colors.PRIMARY_COLOR_NARANJALOGO }}
+                                        onPress={() => stop()} />
+                                ) : null}
+                                {stateCronometro == 'start' ? (
+                                    <FormButton
+                                        icon='pause-circle-o'
+                                        size={22}
+                                        color='#fff'
+                                        stylesContainer={{ height: 45, width: 40, right: 50, position: 'absolute', backgroundColor: '#096C89' }}
+                                        onPress={() => pause()} />
+                                ) : null}
+                                {stateCronometro == 'stop' || stateCronometro == 'pause' ? (
+                                    <FormButton
+                                        icon='repeat'
+                                        size={22}
+                                        color='#fff'
+                                        stylesContainer={{ height: 45, width: 40, right: stateCronometro == 'pause' ? 50 : 0, position: 'absolute', backgroundColor: '#096C89' }}
+                                        onPress={() => restart()} />
+                                ) : null}
+                            </View>
+                            <View style={{ flexDirection: 'row', alignContent: 'space-between', width: '100%', marginTop: 10 }}>
                                 <FormButton
-                                    icon={stateCronometro ? 'stop-circle-o' : 'play-circle-o'}
-                                    size={22}
-                                    color='#fff'
-                                    stylesContainer={{ height: 45, width: 40, right: 0, position: 'absolute', backgroundColor: stateCronometro ? Colors.PRIMARY_COLOR_NARANJALOGO : '#038513' }}
-                                    onPress={() => stateCronometro ? stop() : start()} />
+                                    buttonTitle='Cerrar'
+                                    stylesContainer={{ marginTop: 20, height: 45, width: 100 }}
+                                    onPress={() => clear()} />
+                                <FormButton
+                                    buttonTitle='Guardar'
+                                    stylesContainer={{ marginTop: 20, height: 45, width: 100, position: 'absolute', right: 0, backgroundColor: '#038513' }}
+                                    onPress={() => save()}
+                                    disabled={stateCronometro == 'stop' || stateCronometro == 'pause' ? false : true} />
                             </View>
 
-                            <FormButton
-                                buttonTitle='Cerrar'
-                                stylesContainer={{ marginTop: 20 }}
-                                onPress={() => {
-                                    setModalVisible(!modalVisible)
-                                    setSegundos(0);
-                                    setMinutos(0);
-                                    setHoras(0);
-                                }} />
                         </Card>
                     </View>
                 </View>
             </Modal>
+            <Modal isVisible={modalNota}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Card>
+                            <Card.Title style={{ fontSize: 25, color: Colors.PRIMARY_COLOR_AZULDELLOGO }}>Nota de la cancelación</Card.Title>
+                            <Card.Divider />
+                            <View
+                                style={{
+                                    borderColor: '#000', borderWidth: 1
+                                }}>
+                                <TextInput
+                                    multiline
+                                    numberOfLines={4}
+                                    style={{ color: '#000' }}
+                                    maxLength={130}
+                                    onChangeText={text => setNota(text)} />
+                            </View>
+                            <FormButton
+                                buttonTitle='Guardar'
+                                onPress={() => {
+                                    if (nota != '') {
+                                        setModalNota(false);
+                                    }
+                                }}
+                                disabled={nota != '' ? false : true} />
+                        </Card>
+                    </View>
+                </View>
+            </Modal>
+            {alert(
+                alertMarcar,
+                'Marcar Servicio',
+                '¿Como desea marcar este servicio?',
+                'Realizado',
+                'Cancelado',
+                true,
+                true,
+                () => {
+                    setAlertMarcar(false);
+                    setAlertCancelar(true);
+                },
+                () => {
+                    setAlertMarcar(false);
+                    setAlertFinalizar(true);
+                }
+            )}
+            {alert(
+                alertCancelar,
+                'Servicio cancelado',
+                '¿Desea marcar este servicio como cancelado?',
+                'Aceptar',
+                'Cancelar',
+                true,
+                true,
+                () => {
+                    setAlertCancelar(false);
+                },
+                () => {
+                    setAlertCancelar(false);
+                    setAlertNota(true);
+                }
+            )}
+            {alert(
+                alertFinalizar,
+                'Servicio realizado',
+                '¿Desea marcar este servicio como realizado?',
+                'Aceptar',
+                'Cancelar',
+                true,
+                true,
+                () => {
+                    setAlertFinalizar(false);
+                },
+                () => {
+                    setAlertFinalizar(false);
+                    navigation.navigate('ServiceOrderForm', {
+                        orderData: dataCopy[selectedIndex]
+                    });
+                }
+            )}
+            {alert(
+                alertNota,
+                'Nota',
+                '¿Desea agregar una nota?',
+                'Aceptar',
+                'Cancelar',
+                true,
+                true,
+                () => {
+                    setAlertNota(false);
+                },
+                () => {
+                    setAlertNota(false);
+                    setModalNota(true);
+                }
+            )}
         </View>
     );
 }
@@ -177,7 +413,6 @@ const styles = StyleSheet.create({
         textAlign: 'right'
     },
     content: {
-        // backgroundColor: '#fff',
         height: '100%'
     },
     centeredView: {
@@ -193,7 +428,6 @@ const styles = StyleSheet.create({
     },
     modalView: {
         alignItems: "center",
-
         shadowRadius: 4,
         elevation: 5
     },

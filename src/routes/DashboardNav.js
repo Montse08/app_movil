@@ -63,6 +63,8 @@ const DashboardNav = () => {
                     headerTitleAlign: 'center',
                 }}
             />
+            <Screen name="BottomTab" component={BottomTabNav} options={{ headerShown: false }} />
+            <Screen name="ServiceOrderForm" component={Screens.ServiceOrderFormScreen} options={{ headerTitle: 'Orden de Servicio' }} />
         </Navigator>
     )
 
