@@ -205,7 +205,7 @@ const ServicesScreen = ({ navigation }) => {
         renderData();
     }, []);
 
-    const alert = (show, title, message, confirmText, cancelText, showCancelButton, showConfirmButton, onCancelPressed, onConfirmPressed) => {
+    const alert = (show, title, message, confirmText, cancelText, showCancelButton, showConfirmButton, onCancelPressed, onConfirmPressed, colorButtomConfirm, colorButtomCancel) => {
         return (
             <AwesomeAlert
                 show={show}
@@ -219,7 +219,9 @@ const ServicesScreen = ({ navigation }) => {
                 closeOnHardwareBackPress={false}
                 onCancelPressed={onCancelPressed}
                 onConfirmPressed={onConfirmPressed}
-                messageStyle={{ textAlign: 'center' }} />
+                messageStyle={{ textAlign: 'center' }}
+                confirmButtonColor={colorButtomConfirm}
+                cancelButtonColor={colorButtomCancel} />
         );
     }
 
@@ -351,7 +353,9 @@ const ServicesScreen = ({ navigation }) => {
                 () => {
                     setAlertMarcar(false);
                     setAlertFinalizar(true);
-                }
+                },
+                '#27960B',
+                '#ff0000'
             )}
             {alert(
                 alertCancelar,
@@ -367,7 +371,9 @@ const ServicesScreen = ({ navigation }) => {
                 () => {
                     setAlertCancelar(false);
                     setAlertNota(true);
-                }
+                },
+                '#3880ff',
+                '#ff0000'
             )}
             {alert(
                 alertFinalizar,
@@ -385,7 +391,9 @@ const ServicesScreen = ({ navigation }) => {
                     navigation.navigate('ServiceOrderForm', {
                         orderData: dataCopy[selectedIndex]
                     });
-                }
+                },
+                '#3880ff',
+                '#ff0000'
             )}
             {alert(
                 alertNota,
@@ -401,7 +409,9 @@ const ServicesScreen = ({ navigation }) => {
                 () => {
                     setAlertNota(false);
                     setModalNota(true);
-                }
+                },
+                '#3880ff',
+                '#ff0000'
             )}
         </View>
     );
