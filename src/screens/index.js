@@ -18,3 +18,4 @@ export { default as DateAndTimeScreen } from './DateAndTime';
 export { default as AppointmentDetailScreen } from './AppointmentDetail';
 export { default as WelcomeTechnicalScreen } from './WelcomeTechnical';
 export { default as ServiceOrderFormScreen } from './ServiceOrderForm';
+export { default as SignatureScreen } from './Signature';

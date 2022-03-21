@@ -1,0 +1,46 @@
+[
+    {
+        "plaga": "Cucaracha Alemana",
+        "state": false
+    },
+    {
+        "plaga": "Cucaracha Americana",
+        "state": false
+    },
+    {
+        "plaga": "Hormiga",
+        "state": false
+    },
+    {
+        "plaga": "Araña",
+        "state": false
+    },
+    {
+        "plaga": "Alacrán",
+        "state": false
+    },
+    {
+        "plaga": "Víbora",
+        "state": false
+    },
+    {
+        "plaga": "Garrapata",
+        "state": false
+    },
+    {
+        "plaga": "Termita",
+        "state": false
+    },
+    {
+        "plaga": "Pulga",
+        "state": false
+    },
+    {
+        "plaga": "Roedor",
+        "state": false
+    },
+    {
+        "plaga": "Polilla",
+        "state": false
+    }
+]

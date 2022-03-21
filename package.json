@@ -32,6 +32,7 @@
     "react-native-reanimated": "^2.4.1",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^3.13.0",
+    "react-native-signature-capture": "^0.4.12",
     "react-native-timeline-flatlist": "^0.8.0",
     "react-native-vector-icons": "^9.1.0"
   },

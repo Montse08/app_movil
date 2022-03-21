@@ -1,0 +1,14 @@
+[
+    {
+        "metodo": "Aspersión",
+        "state": false
+    },
+    {
+        "metodo": "Termonebulización",
+        "state": false
+    },
+    {
+        "metodo": "Micronización",
+        "state": false
+    }
+]

@@ -10,18 +10,27 @@ import Colors from '../utils/Colors';
 import moment from 'moment';
 import { Data } from '../utils';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const ServicesScreen = ({ navigation }) => {
     const [dataCopy, setDataCopy] = useState(Data);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalNota, setModalNota] = useState(false);
     const [alertMarcar, setAlertMarcar] = useState(false);
+    const [alertInfo, setAlertInfo] = useState(false);
     const [alertFinalizar, setAlertFinalizar] = useState(false);
     const [alertCancelar, setAlertCancelar] = useState(false);
     const [alertNota, setAlertNota] = useState(false);
+    const [alertReschedule, setAlertReschedule] = useState(false);
+    const [show, setShow] = useState(false);
+    const [reschedule, setReschedule] = useState(false);
+    const [dateTimePicker, setDateTimePicker] = useState(false);
     const [stateCronometro, setStateCronometro] = useState('neutral');
     const [selectedValue, setSelectedValue] = useState("d");
     const [nota, setNota] = useState('');
+    const [fecha, setFecha] = useState('');
+    const [hora, setHora] = useState('');
+    const [mode, setMode] = useState('date')
     const [segundos, setSegundos] = useState(0);
     const [minutos, setMinutos] = useState(0);
     const [horas, setHoras] = useState(0);
@@ -108,20 +117,12 @@ const ServicesScreen = ({ navigation }) => {
         }
         let dataCopy_ = dataCopy;
         let info = [];
-        dataCopy_[selectedIndex] = {
-            "id": dataCopy[selectedIndex].id,
-            "title": dataCopy[selectedIndex].title,
-            "time": dataCopy[selectedIndex].time,
-            "iconColor": dataCopy[selectedIndex].iconColor,
-            "description": dataCopy[selectedIndex].description,
-            "timeService": serviceTime,
-            "iconBorderColor": dataCopy[selectedIndex].iconBorderColor
-        }
+        dataCopy_[selectedIndex].timeService = serviceTime;
         setDataCopy(dataCopy_);
-        dataCopy.forEach((element) => {
+        dataCopy.forEach((element, index) => {
             info.push({
                 title: () => renderTitle(element.time, element.title, element.iconColor),
-                description: () => renderDescription(element.description, element.id, element.timeService),
+                description: () => renderDescription(element.description, index, element.timeService, element.enter_time),
                 icon: {
                     style: {
                         backgroundColor: element.iconColor,
@@ -134,37 +135,107 @@ const ServicesScreen = ({ navigation }) => {
         clear();
     }
 
-    const renderDescription = (description, index, time) => {
+    const rescheduleSave = () => {
+        let dataCopy_ = dataCopy;
+        let info = [];
+        dataCopy_.splice(selectedIndex, 1);
+        setDataCopy(dataCopy_);
+        dataCopy.forEach((element, index) => {
+            info.push({
+                title: () => renderTitle(element.time, element.title, element.iconColor),
+                description: () => renderDescription(element.description, index, element.timeService, element.enter_time),
+                icon: {
+                    style: {
+                        backgroundColor: element.iconColor,
+                        borderColor: element.iconBorderColor
+                    }
+                }
+            });
+        });
+        setData(info);
+        setAlertReschedule(false);
+    }
+
+    const confirmTime = (time) => {
+        let templateTime = new Date(time);
+        let dataCopy_ = dataCopy;
+        let info = [];
+        dataCopy_[selectedIndex].enter_time = templateTime;
+        setDataCopy(dataCopy_);
+        dataCopy.forEach((element, index) => {
+            info.push({
+                title: () => renderTitle(element.time, element.title, element.iconColor),
+                description: () => renderDescription(element.description, index, element.timeService, element.enter_time),
+                icon: {
+                    style: {
+                        backgroundColor: element.iconColor,
+                        borderColor: element.iconBorderColor
+                    }
+                }
+            });
+        });
+        setData(info);
+        setShow(false);
+    }
+
+    const confirmDateTime = (dateTime) => {
+        let templateDateTime = new Date(dateTime);
+        if (mode == 'date') {
+            setFecha(templateDateTime);
+        } else {
+            setHora(templateDateTime);
+        }
+        setDateTimePicker(false);
+    }
+
+    const renderDescription = (description, index, time, enter_time) => {
         return (
-            <View>
+            <View style={{ flexBasis: '100%', width: '100%' }}>
                 <Text style={{ color: '#000', marginTop: 5 }}>
                     {description}
                 </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: enter_time ? 0 : 10 }}>
+                    <Text style={{ color: '#000' }}>Hora de entrada: {enter_time ? moment(enter_time).format('hh:mm a') : ''} </Text>
+                    {enter_time ? null : (
+                        <FormButton
+                            icon='clock-o'
+                            size={15}
+                            color='#fff'
+                            stylesContainer={{ position: 'absolute', width: '14%', right: 0, backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO, borderRadius: 100 }}
+                            onPress={() => {
+                                setShow(true);
+                                setSelectedIndex(index);
+                            }} />
+                    )}
+                </View>
                 {time == '' ? (
                     <FormButton buttonTitle="Tomar tiempo del servicio"
                         onPress={() => {
                             setModalVisible(true);
-                            setSelectedIndex(index - 1);
+                            setSelectedIndex(index);
                         }}
                         stylesText={{ fontSize: 15 }}
-                        stylesContainer={{ height: 40, position: 'absolute', right: 0, left: 0, marginTop: 30 }} />
+                        disabled={enter_time == '' ? true : false} />
                 ) : (
-                    <Text style={{ color: '#000', marginTop: 5 }}>Tiempo del servicio: {time}</Text>
+                    <Text style={{ color: '#000' }}>Tiempo del servicio: {time}</Text>
                 )}
-                <View style={{ flexDirection: 'row', width: 256, marginTop: time == '' ? 45 : 0, alignContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row' }}>
                     <FormButton
                         buttonTitle="Marcar"
-                        stylesContainer={{ width: 120, height: 40 }}
+                        stylesContainer={{ width: '48%' }}
                         stylesText={{ fontSize: 15 }}
                         onPress={() => {
                             setAlertMarcar(true);
-                            setSelectedIndex(index - 1);
+                            setSelectedIndex(index);
                         }} />
-                    <FormButton
-                        buttonTitle="Reprogramar"
-                        stylesContainer={{ width: 120, height: 40, right: 5, position: 'absolute' }}
+                    <FormButton buttonTitle="Reprogramar"
+                        stylesContainer={{ width: '48%', marginLeft: '4%' }}
                         stylesText={{ fontSize: 15 }}
-                        disabled={time == '' ? false : true} />
+                        disabled={time == '' ? false : true}
+                        onPress={() => {
+                            setReschedule(true);
+                            setSelectedIndex(index);
+                        }} />
                 </View>
             </View>
         )
@@ -185,10 +256,10 @@ const ServicesScreen = ({ navigation }) => {
 
     const renderData = () => {
         let info = [];
-        dataCopy.forEach(element => {
+        dataCopy.forEach((element, index) => {
             info.push({
                 title: () => renderTitle(element.time, element.title, element.iconColor),
-                description: () => renderDescription(element.description, element.id, element.timeService),
+                description: () => renderDescription(element.description, index, element.timeService, element.enter_time),
                 icon: {
                     style: {
                         backgroundColor: element.iconColor,
@@ -204,26 +275,6 @@ const ServicesScreen = ({ navigation }) => {
     useEffect(() => {
         renderData();
     }, []);
-
-    const alert = (show, title, message, confirmText, cancelText, showCancelButton, showConfirmButton, onCancelPressed, onConfirmPressed, colorButtomConfirm, colorButtomCancel) => {
-        return (
-            <AwesomeAlert
-                show={show}
-                title={title}
-                message={message}
-                showCancelButton={showCancelButton}
-                showConfirmButton={showConfirmButton}
-                confirmText={confirmText}
-                cancelText={cancelText}
-                closeOnTouchOutside={false}
-                closeOnHardwareBackPress={false}
-                onCancelPressed={onCancelPressed}
-                onConfirmPressed={onConfirmPressed}
-                messageStyle={{ textAlign: 'center' }}
-                confirmButtonColor={colorButtomConfirm}
-                cancelButtonColor={colorButtomCancel} />
-        );
-    }
 
     return (
         <View style={styles.content}>
@@ -248,6 +299,16 @@ const ServicesScreen = ({ navigation }) => {
                 contentContainerStyle={{ flexBasis: '80%' }}
                 timeContainerStyle={{ display: 'none' }}
                 style={{ marginTop: 15 }} />
+            <DateTimePickerModal
+                isVisible={show}
+                date={new Date()}
+                mode='time'
+                is24hours={true}
+                display='default'
+                onConfirm={confirmTime}
+                onCancel={() => setShow(false)}
+                minimumDate={new Date()}
+            />
             <Modal isVisible={modalVisible}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
@@ -324,7 +385,9 @@ const ServicesScreen = ({ navigation }) => {
                                     numberOfLines={4}
                                     style={{ color: '#000' }}
                                     maxLength={130}
-                                    onChangeText={text => setNota(text)} />
+                                    onChangeText={text => setNota(text)}
+                                    textAlignVertical="top"
+                                    selectionColor="#999" />
                             </View>
                             <FormButton
                                 buttonTitle='Guardar'
@@ -338,81 +401,192 @@ const ServicesScreen = ({ navigation }) => {
                     </View>
                 </View>
             </Modal>
-            {alert(
-                alertMarcar,
-                'Marcar Servicio',
-                '¿Como desea marcar este servicio?',
-                'Realizado',
-                'Cancelado',
-                true,
-                true,
-                () => {
+            <Modal isVisible={reschedule}>
+                <View style={{ alignContent: 'center' }}>
+                    <Card>
+                        <Card.Title style={{ fontSize: 18 }}>Reagendar cita</Card.Title>
+                        <Card.Divider />
+                        <Text style={{ color: '#000', marginBottom: 5, fontSize: 15 }}>Selecciona la fecha</Text>
+                        <View style={{ flexDirection: 'row', alignContent: 'center', height: 40, marginBottom: 10 }}>
+                            <TextInput
+                                style={styles.input}
+                                underlineColorAndroid="transparent"
+                                placeholder="dd/mm/yyyy"
+                                placeholderTextColor="#999"
+                                value={fecha ? moment(fecha).format('dddd DD [de] MMMM [de] YYYY') : ''}
+                                editable={false} />
+                            <FormButton
+                                icon="calendar-o"
+                                size={15}
+                                color="#fff"
+                                stylesContainer={{ marginTop: 0, width: '15%', backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO, borderRadius: 100 }}
+                                onPress={() => {
+                                    setMode('date');
+                                    setDateTimePicker(true);
+                                }} />
+                        </View>
+                        <Text style={{ color: '#000', marginBottom: 5, fontSize: 15 }}>Selecciona la hora</Text>
+                        <View style={{ flexDirection: 'row', alignContent: 'center', height: 40 }}>
+                            <TextInput
+                                style={styles.input}
+                                underlineColorAndroid="transparent"
+                                placeholder="hh:mm"
+                                placeholderTextColor="#999"
+                                value={hora ? moment(hora).format('hh:mm a') : ''}
+                                editable={false} />
+                            <FormButton
+                                icon="clock-o"
+                                size={15}
+                                color="#fff"
+                                stylesContainer={{ marginTop: 0, width: '15%', backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO, borderRadius: 100 }}
+                                onPress={() => {
+                                    setMode('time');
+                                    setDateTimePicker(true);
+                                }} />
+                        </View>
+                        <View style={{ flexDirection: 'row', alignContent: 'center', height: 40, marginTop: 15 }}>
+                            <FormButton
+                                buttonTitle="Guardar"
+                                stylesText={{ fontSize: 17 }}
+                                stylesContainer={{ marginTop: 0, width: '48%', marginRight: '4%', backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO }}
+                                onPress={() => {
+                                    setAlertReschedule(true);
+                                    setReschedule(false);
+                                    setFecha('');
+                                    setHora('');
+                                }}
+                                disabled={fecha && hora ? false : true} />
+                            <FormButton
+                                buttonTitle="Cancelar"
+                                stylesText={{ fontSize: 17 }}
+                                stylesContainer={{ marginTop: 0, width: '48%' }}
+                                onPress={() => {
+                                    setReschedule(false);
+                                    setFecha('');
+                                    setHora('');
+                                }} />
+                        </View>
+                    </Card>
+                </View>
+            </Modal>
+            <DateTimePickerModal
+                isVisible={dateTimePicker}
+                date={new Date()}
+                mode={mode}
+                is24hours={true}
+                display='default'
+                onConfirm={confirmDateTime}
+                onCancel={() => setDateTimePicker(false)}
+                minimumDate={new Date()}
+            />
+            <AwesomeAlert
+                show={alertMarcar}
+                title='Marcar Servicio'
+                message='¿Como desea marcar este servicio?'
+                showCancelButton={true}
+                showConfirmButton={true}
+                confirmText='Realizado'
+                cancelText='Cancelado'
+                closeOnTouchOutside={false}
+                closeOnHardwareBackPress={false}
+                onCancelPressed={() => {
                     setAlertMarcar(false);
                     setAlertCancelar(true);
-                },
-                () => {
-                    setAlertMarcar(false);
-                    setAlertFinalizar(true);
-                },
-                '#27960B',
-                '#ff0000'
-            )}
-            {alert(
-                alertCancelar,
-                'Servicio cancelado',
-                '¿Desea marcar este servicio como cancelado?',
-                'Aceptar',
-                'Cancelar',
-                true,
-                true,
-                () => {
-                    setAlertCancelar(false);
-                },
-                () => {
+                }}
+                onConfirmPressed={() => {
+                    if (dataCopy[selectedIndex].enter_time && dataCopy[selectedIndex].timeService) {
+                        setAlertMarcar(false);
+                        setAlertFinalizar(true);
+                    } else {
+                        setAlertMarcar(false);
+                        setAlertInfo(true);
+                    }
+                }}
+                messageStyle={{ textAlign: 'center' }}
+                confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO}
+                cancelButtonColor='#ff0000' />
+            <AwesomeAlert
+                show={alertInfo}
+                title='Falta información'
+                message='El tiempo del servicio o la hora de entrada aún no han sido registradas'
+                showConfirmButton={true}
+                confirmText='Aceptar'
+                closeOnTouchOutside={false}
+                closeOnHardwareBackPress={false}
+                onConfirmPressed={() => setAlertInfo(false)}
+                messageStyle={{ textAlign: 'center' }}
+                confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO} />
+            <AwesomeAlert
+                show={alertCancelar}
+                title='Servicio cancelado'
+                message='¿Desea marcar este servicio como cancelado?'
+                showCancelButton={true}
+                showConfirmButton={true}
+                confirmText='Aceptar'
+                cancelText='Cancelar'
+                closeOnTouchOutside={false}
+                closeOnHardwareBackPress={false}
+                onCancelPressed={() => setAlertCancelar(false)}
+                onConfirmPressed={() => {
                     setAlertCancelar(false);
                     setAlertNota(true);
-                },
-                '#3880ff',
-                '#ff0000'
-            )}
-            {alert(
-                alertFinalizar,
-                'Servicio realizado',
-                '¿Desea marcar este servicio como realizado?',
-                'Aceptar',
-                'Cancelar',
-                true,
-                true,
-                () => {
-                    setAlertFinalizar(false);
-                },
-                () => {
+                }}
+                messageStyle={{ textAlign: 'center' }}
+                confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO}
+                cancelButtonColor='#ff0000' />
+            <AwesomeAlert
+                show={alertFinalizar}
+                title='Servicio realizado'
+                message='¿Desea marcar este servicio como realizado?'
+                showCancelButton={true}
+                showConfirmButton={true}
+                confirmText='Aceptar'
+                cancelText='Cancelar'
+                closeOnTouchOutside={false}
+                closeOnHardwareBackPress={false}
+                onCancelPressed={() => setAlertFinalizar(false)}
+                onConfirmPressed={() => {
                     setAlertFinalizar(false);
                     navigation.navigate('ServiceOrderForm', {
-                        orderData: dataCopy[selectedIndex]
+                        orderData: JSON.stringify(dataCopy[selectedIndex])
                     });
-                },
-                '#3880ff',
-                '#ff0000'
-            )}
-            {alert(
-                alertNota,
-                'Nota',
-                '¿Desea agregar una nota?',
-                'Aceptar',
-                'Cancelar',
-                true,
-                true,
-                () => {
-                    setAlertNota(false);
-                },
-                () => {
+                }}
+                messageStyle={{ textAlign: 'center' }}
+                confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO}
+                cancelButtonColor='#ff0000' />
+            <AwesomeAlert
+                show={alertNota}
+                title='Nota'
+                message='¿Desea agregar una nota?'
+                showCancelButton={true}
+                showConfirmButton={true}
+                confirmText='Aceptar'
+                cancelText='Cancelar'
+                closeOnTouchOutside={false}
+                closeOnHardwareBackPress={false}
+                onCancelPressed={() => setAlertNota(false)}
+                onConfirmPressed={() => {
                     setAlertNota(false);
                     setModalNota(true);
-                },
-                '#3880ff',
-                '#ff0000'
-            )}
+                }}
+                messageStyle={{ textAlign: 'center' }}
+                confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO}
+                cancelButtonColor='#ff0000' />
+            <AwesomeAlert
+                show={alertReschedule}
+                title='Reagendar'
+                message='¿Desea reagendar la cita?'
+                showCancelButton={true}
+                showConfirmButton={true}
+                confirmText='Aceptar'
+                cancelText='Cancelar'
+                closeOnTouchOutside={false}
+                closeOnHardwareBackPress={false}
+                onCancelPressed={() => setAlertReschedule(false)}
+                onConfirmPressed={() => rescheduleSave()}
+                messageStyle={{ textAlign: 'center' }}
+                confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO}
+                cancelButtonColor='#ff0000' />
         </View>
     );
 }
@@ -441,6 +615,17 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
+    input: {
+        borderWidth: 1,
+        color: '#000',
+        borderRadius: 5,
+        borderColor: '#000',
+        height: 40,
+        marginBottom: 10,
+        fontSize: 15,
+        width: '80%',
+        marginRight: '5%'
+    }
 })
 
 export default ServicesScreen;

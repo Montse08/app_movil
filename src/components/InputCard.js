@@ -6,7 +6,6 @@ import { windowWidth } from "../utils/Dimentions";
 
 
 const Forminput = ({ labelValue, placeholderText, iconType, ...rest }) => {
-    console.log(iconType);
 
     return (
         <View style={styles.inputContainer}>

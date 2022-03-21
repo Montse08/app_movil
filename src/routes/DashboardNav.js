@@ -64,6 +64,7 @@ const DashboardNav = () => {
                 }}
             />
             <Screen name="ServiceOrderForm" component={Screens.ServiceOrderFormScreen} options={{ headerTitle: 'Orden de Servicio' }} />
+            <Screen name="Signature" component={Screens.SignatureScreen} options={{ headerTitle: 'Firmas' }} />
         </Navigator>
     )
 
