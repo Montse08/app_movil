@@ -11,6 +11,7 @@ import moment from 'moment';
 import { Data } from '../utils';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import MapView from 'react-native-maps';
 
 const ServicesScreen = ({ navigation }) => {
     const [dataCopy, setDataCopy] = useState(Data);
@@ -278,6 +279,15 @@ const ServicesScreen = ({ navigation }) => {
 
     return (
         <View style={styles.content}>
+            <MapView
+                initialRegion={{
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0.0143,
+                    longitudeDelta: 0.0134,
+                }}
+                style={{width: 400, height: 400}}
+            />
             <HeaderScreen title="Servicios"></HeaderScreen>
             <Card>
                 <Text style={styles.text}>
