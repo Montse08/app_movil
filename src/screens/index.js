@@ -8,7 +8,7 @@ export { default as ProfileScreen } from './Profile';
 export { default as ServicesScreen } from './Services';
 export { default as ServiceOrdenScreen } from './ServiceOrden';
 export { default as MileageScreen } from './Mileage';
-export { default as GasolineScreen } from './Gasoline';
+export { default as CalendarScreen } from './Calendar';
 export { default as ProfileTechnicalScreen } from './ProfileTechnical';
 export { default as DomicileScreen } from './Domicile';
 export { default as PetsScreen } from './Pets';

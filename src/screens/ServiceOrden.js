@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Card } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { HeaderScreen } from '../components';
@@ -15,7 +15,7 @@ const ServiceOrdenScreen = () => {
 
     const renderData = (value, index) => {
         return (
-            <Card key={index}>
+            <Card key={index} containerStyle={[styles.elevation, { borderRadius: 10 }]}>
                 <Card.Title>{value.title}</Card.Title>
                 <Card.Divider />
                 <Text style={{ color: '#000' }}>{value.description}</Text>
@@ -26,7 +26,7 @@ const ServiceOrdenScreen = () => {
     }
 
     return (
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ backgroundColor: '#fff', height: '100%' }}>
             <HeaderScreen title="Ordenes de Servicio"></HeaderScreen>
             {Data.map((value, index) => renderData(value, index))}
             <View style={{ marginTop: 10 }}></View>
@@ -35,3 +35,15 @@ const ServiceOrdenScreen = () => {
 }
 
 export default ServiceOrdenScreen;
+
+const styles = StyleSheet.create({
+    elevation: {
+        shadowColor: '#470000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        elevation: 5
+    }
+});

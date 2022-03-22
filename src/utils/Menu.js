@@ -32,7 +32,7 @@ export const MenuTecnico = [
     {
         'name': 'Services',
         'component': Screens.ServicesScreen,
-        'icon': 'calendar-check-o'
+        'icon': 'pencil-square-o'
     },
     {
         'name': 'ServiceOrden',
@@ -45,9 +45,9 @@ export const MenuTecnico = [
         'icon': 'tachometer'
     },
     {
-        'name': 'Gasoline',
-        'component': Screens.GasolineScreen,
-        'icon': 'tint'
+        'name': 'Calendar',
+        'component': Screens.CalendarScreen,
+        'icon': 'calendar'
     },
     {
         'name': 'ProfileTechnical',

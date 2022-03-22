@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, TextInput } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { Text, View, StyleSheet, TextInput, PermissionsAndroid } from 'react-native';
 import { HeaderScreen } from '../components';
 import { Card } from 'react-native-elements';
 import { Timeline } from 'react-native-just-timeline';
@@ -8,6 +7,7 @@ import FormButton from '../components/FormButton';
 import Modal from 'react-native-modal';
 import Colors from '../utils/Colors';
 import moment from 'moment';
+import 'moment/locale/es-mx';
 import { Data } from '../utils';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -27,7 +27,6 @@ const ServicesScreen = ({ navigation }) => {
     const [reschedule, setReschedule] = useState(false);
     const [dateTimePicker, setDateTimePicker] = useState(false);
     const [stateCronometro, setStateCronometro] = useState('neutral');
-    const [selectedValue, setSelectedValue] = useState("d");
     const [nota, setNota] = useState('');
     const [fecha, setFecha] = useState('');
     const [hora, setHora] = useState('');
@@ -275,38 +274,24 @@ const ServicesScreen = ({ navigation }) => {
 
     useEffect(() => {
         renderData();
+        // requestPermissionAndroid();
     }, []);
+
+    // const requestPermissionAndroid = async () => {
+    //     PermissionsAndroid.PERMISSIONS.ACCE
+    // }
 
     return (
         <View style={styles.content}>
-            <MapView
-                initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.0143,
-                    longitudeDelta: 0.0134,
-                }}
-                style={{width: 400, height: 400}}
-            />
             <HeaderScreen title="Servicios"></HeaderScreen>
-            <Card>
+            <Card containerStyle={[styles.elevation, { borderRadius: 10 }]}>
                 <Text style={styles.text}>
                     {moment(new Date()).locale('es-mx').format('dddd DD [de] MMMM [de] YYYY')}
                 </Text>
                 <Text style={{ color: '#000', fontSize: 16, marginTop: 15, fontWeight: 'bold' }}>Automovil: RENAULT/ UTZ-3456</Text>
-                <Picker
-                    selectedValue={selectedValue}
-                    style={{ width: '100%', color: '#000' }}
-                    itemStyle={{ color: '#000', backgroundColor: '#fff' }}
-                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    dropdownIconColor="#000" >
-                    <Picker.Item label="Día" value="d" />
-                    <Picker.Item label="Semana" value="s" />
-                    <Picker.Item label="Mes" value="m" />
-                </Picker>
             </Card>
             <Timeline data={data}
-                contentContainerStyle={{ flexBasis: '80%' }}
+                contentContainerStyle={[styles.elevation, { flexBasis: '80%' }]}
                 timeContainerStyle={{ display: 'none' }}
                 style={{ marginTop: 15 }} />
             <DateTimePickerModal
@@ -375,7 +360,6 @@ const ServicesScreen = ({ navigation }) => {
                                     onPress={() => save()}
                                     disabled={stateCronometro == 'stop' || stateCronometro == 'pause' ? false : true} />
                             </View>
-
                         </Card>
                     </View>
                 </View>
@@ -607,7 +591,8 @@ const styles = StyleSheet.create({
         textAlign: 'right'
     },
     content: {
-        height: '100%'
+        height: '100%',
+        backgroundColor: '#fff'
     },
     centeredView: {
         flex: 1,
@@ -635,6 +620,15 @@ const styles = StyleSheet.create({
         fontSize: 15,
         width: '80%',
         marginRight: '5%'
+    },
+    elevation: {
+        shadowColor: '#470000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        elevation: 5
     }
 })
 

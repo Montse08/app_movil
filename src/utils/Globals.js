@@ -22,3 +22,24 @@ export const SIGNATURE_BLANK = "iVBORw0KGgoAAAANSUhEUgAAAXYAAAH0CAYAAAApJga2AAAA
     "xtgBYowdIMbYAWKMHSDG2AFijB0gxtgBYowdIMbYAWKMHSDG2AFijB0gxtgBYowdIMbYAWKMHSDG2AFijB0gxtgBYowdIMbYAWKMHSDG2AFi" +
     "jB0gxtgBYowdIMbYAWKMHSDG2AFijB0gxtgBYowdIMbYAWKMHSDG2AFijB0gxtgBYowdIMbYAWKMHSDG2AFijB0gxtgBYowdIMbYAWKMHSDG" +
     "2AFijB0g5gKWrwfkckkAEAAAAABJRU5ErkJggg==";
+
+export const CALENDAR = {
+    monthNames: [
+        'Enero',
+        'Febrero',
+        'Marzo',
+        'Abril',
+        'Mayo',
+        'Junio',
+        'Julio',
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre'
+    ],
+    monthNamesShort: ['Ene.', 'Feb.', 'Mar.', 'Abr.', 'May.', 'Jun.', 'Jul.', 'Ago.', 'Sep.', 'Oct.', 'Nov.', 'Dic.'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom.', 'Lun.', 'Mar.', 'Mie.', 'Jue.', 'Vie.', 'Sab.'],
+    today: "Hoy"
+}

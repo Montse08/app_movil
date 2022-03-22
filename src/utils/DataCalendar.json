@@ -1,0 +1,58 @@
+{
+    "2022-03-25": {
+        "dots": [
+            {
+                "key": "vacation",
+                "color": "red",
+                "client": "Jiovany",
+                "adress": "Domicilio conocido",
+                "hour": "10:00 am",
+                "type": "Desinfección"
+            },
+            {
+                "key": "massage",
+                "color": "blue",
+                "client": "Jiovany",
+                "adress": "Domicilio conocido",
+                "hour": "10:00 am",
+                "type": "Desinfección"
+            },
+            {
+                "key": "workout",
+                "color": "green",
+                "client": "Jiovany",
+                "adress": "Domicilio conocido",
+                "hour": "10:00 am",
+                "type": "Desinfección"
+            }
+        ]
+    },
+    "2022-03-26": {
+        "dots": [
+            {
+                "key": "vacation",
+                "color": "red",
+                "client": "Jiovany",
+                "adress": "Domicilio conocido",
+                "hour": "10:00 am",
+                "type": "Desinfección"
+            },
+            {
+                "key": "massage",
+                "color": "blue",
+                "client": "Jiovany",
+                "adress": "Domicilio conocido",
+                "hour": "10:00 am",
+                "type": "Desinfección"
+            },
+            {
+                "key": "workout",
+                "color": "green",
+                "client": "Jiovany",
+                "adress": "Domicilio conocido",
+                "hour": "10:00 am",
+                "type": "Desinfección"
+            }
+        ]
+    }
+}

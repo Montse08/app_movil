@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Avatar, Card } from 'react-native-elements';
 import { HeaderScreen } from '../components';
 import FormButton from '../components/FormButton';
@@ -7,7 +7,7 @@ import Colors from '../utils/Colors';
 
 const ProfileTechnicalScreen = ({ navigation }) => {
     return (
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ backgroundColor: '#fff', height: '100%' }}>
             <View>
                 <HeaderScreen title="Perfil" />
                 <View style={{
@@ -27,19 +27,19 @@ const ProfileTechnicalScreen = ({ navigation }) => {
                     </Text>
                 </View>
                 <View style={{ marginTop: -15 }}>
-                    <Card>
+                    <Card containerStyle={[styles.elevation, { borderRadius: 10 }]}>
                         <Card.Title>Datos personales</Card.Title>
                         <Card.Divider />
                         <Text style={{ color: '#000' }}>Ángel Hernandez Cortes</Text>
                     </Card>
-                    <Card>
+                    <Card containerStyle={[styles.elevation, { borderRadius: 10 }]}>
                         <Card.Title>Datos de la cuenta</Card.Title>
                         <Card.Divider />
                         <Text style={{ color: '#000' }}>Nombre de usuario: Ángel</Text>
                         <Text style={{ color: '#000' }}>Correo: angel@gmail.com</Text>
                         <Text style={{ color: '#000' }}>Contraseña: ************</Text>
                     </Card>
-                    <Card>
+                    <Card containerStyle={[styles.elevation, { borderRadius: 10 }]}>
                         <FormButton buttonTitle="Cerrar sesión" onPress={() => navigation.navigate('Login')} />
                     </Card>
                 </View>
@@ -49,3 +49,15 @@ const ProfileTechnicalScreen = ({ navigation }) => {
 }
 
 export default ProfileTechnicalScreen;
+
+const styles = StyleSheet.create({
+    elevation: {
+        shadowColor: '#470000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        elevation: 5
+    }
+});

@@ -9,3 +9,4 @@ export { default as DataPlagas } from './DataPlagas.json';
 export { default as DataMetodo } from './DataMetodo.json';
 export { default as DataServicio } from './DataServicio.json';
 export { default as DataProductos } from './DataProductos.json';
+export { default as DataCalendar } from './DataCalendar.json';
