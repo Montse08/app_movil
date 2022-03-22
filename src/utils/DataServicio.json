@@ -1,0 +1,26 @@
+[
+    {
+        "servicio": "Base",
+        "state": false
+    },
+    {
+        "servicio": "Refuerzo",
+        "state": false
+    },
+    {
+        "servicio": "Factura",
+        "state": false
+    },
+    {
+        "servicio": "Monitoreo",
+        "state": false
+    },
+    {
+        "servicio": "Mantto",
+        "state": false
+    },
+    {
+        "servicio": "Recibo",
+        "state": false
+    }
+]

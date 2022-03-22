@@ -1,3 +1,7 @@
 rootProject.name = 'appmovil'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':reactnativesignaturecapture'
+project(':reactnativesignaturecapture').projectDir = new File(settingsDir, '../node_modules/react-native-signature-capture/android')
+include ':react-native-add-calendar-event'
+project(':react-native-add-calendar-event').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-add-calendar-event/android')
 include ':app'

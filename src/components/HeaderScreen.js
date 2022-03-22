@@ -15,13 +15,13 @@ const styles = StyleSheet.create({
     view: {
         width: "100%",
         height: 50,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO,
         alignItems: 'flex-start',
         justifyContent: 'center',
     },
     title: {
         fontSize: 25,
-        color: Colors.PRIMARY_COLOR_AZULDELLOGO,
+        color: '#fff',
         fontWeight: 'bold',
         paddingLeft: 20
     }

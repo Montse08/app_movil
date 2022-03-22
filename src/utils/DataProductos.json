@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Fipronil",
+        "state": false
+    },
+    {
+        "name": "Cipermitrina",
+        "state": false
+    },
+    {
+        "name": "Deltrametina",
+        "state": false
+    },
+    {
+        "name": "Imidacloprid",
+        "state": false
+    },
+    {
+        "name": "Thiametoxam",
+        "state": false
+    },
+    {
+        "name": "Alfacipermetrina",
+        "state": false
+    },
+    {
+        "name": "Bromadiolona",
+        "state": false
+    }
+]

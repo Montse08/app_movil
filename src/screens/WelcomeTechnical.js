@@ -5,6 +5,7 @@ import Colors from '../utils/Colors';
 import { Picker } from '@react-native-picker/picker';
 import FormButton from '../components/FormButton';
 import moment from 'moment';
+import 'moment/locale/es-mx';
 
 const WelcomeTechnicalScreen = ({ navigation }) => {
     const [selectedValue, setSelectedValue] = useState(0);
