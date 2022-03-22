@@ -10,3 +10,4 @@ export { default as DataMetodo } from './DataMetodo.json';
 export { default as DataServicio } from './DataServicio.json';
 export { default as DataProductos } from './DataProductos.json';
 export { default as DataCalendar } from './DataCalendar.json';
+export { default as API_GOOGLE } from './api-google.json';

@@ -11,14 +11,13 @@ import 'moment/locale/es-mx';
 import { Data } from '../utils';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import MapView, { Marker } from 'react-native-maps';
-import Geolocation from 'react-native-geolocation-service';
 
 const ServicesScreen = ({ navigation }) => {
     const [dataCopy, setDataCopy] = useState(Data);
+    const [permission, setPermission] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalNota, setModalNota] = useState(false);
-    const [modalMap, setModalMap] = useState(false);
+    const [alertPermission, setAlertPermission] = useState(false);
     const [alertMarcar, setAlertMarcar] = useState(false);
     const [alertInfo, setAlertInfo] = useState(false);
     const [alertFinalizar, setAlertFinalizar] = useState(false);
@@ -39,10 +38,6 @@ const ServicesScreen = ({ navigation }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [intervalo, setIntervalo] = useState();
     const [data, setData] = useState();
-    const [position, setPosition] = useState();
-    const [prueba, setPrueba] = useState();
-
-    console.log(position);
 
     const countHoras = () => {
         setHoras((prevHoras) => {
@@ -260,11 +255,11 @@ const ServicesScreen = ({ navigation }) => {
                         color="#fff"
                         stylesContainer={{ backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO, marginTop: 0, position: 'absolute', width: 35, right: 0, height: 35, borderRadius: 100 }}
                         onPress={() => {
-                            setModalMap(true);
-                            requestPermissionAndroid();
-                            console.log(prueba);
-                            if (prueba == undefined) {
-                                console.log('no hay info');
+                            console.log(permission);
+                            if (permission) {
+                                navigation.navigate('Maps');
+                            } else {
+                                setAlertPermission(true);
                             }
                         }} />
                 </View>
@@ -294,39 +289,23 @@ const ServicesScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        renderData();
-        requestPermissionAndroid();
+        requestPermissionAndroid().then(() => {
+            console.log(permission);
+            renderData();
+        });
     }, []);
-
-    const getMyLocation = () => {
-        Geolocation.getCurrentPosition(
-            async position => {
-                let formatPosition = {
-                    'latitude': position.coords.latitude,
-                    'longitude': position.coords.longitude
-                }
-                setPosition(formatPosition);
-            },
-            error => {
-                console.info('error getCurrentPosition', error);
-            },
-            { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 },
-        );
-    };
 
     const requestPermissionAndroid = async () => {
         PermissionsAndroid.check(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         ).then(async checkLocation => {
             if (checkLocation) {
-                getMyLocation();
+                setPermission(true);
             } else {
                 try {
-                    const granted = await PermissionsAndroid.request(
-                        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                    );
+                    const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,);
                     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                        getMyLocation();
+                        setPermission(true);
                     }
                 } catch (err) {
                     console.warn('error permissions android', err);
@@ -517,46 +496,6 @@ const ServicesScreen = ({ navigation }) => {
                     </Card>
                 </View>
             </Modal>
-            <Modal isVisible={modalMap}>
-                <View>
-                    <Card containerStyle={{ borderRadius: 10 }}>
-                        <Card.Title style={{ fontSize: 18 }}>Ubicación del servicio</Card.Title>
-                        <Card.Divider />
-                        <MapView
-                            initialRegion={{
-                                latitude: 21.1557399,
-                                longitude: -86.8200826,
-                                latitudeDelta: 0.0100,
-                                longitudeDelta: 0.0091,
-                            }}
-                            showsUserLocation
-                            loadingEnabled
-                            style={{ width: '100%', height: 400 }}>
-                            <Marker
-                                coordinate={{ latitude: 21.1557399, longitude: -86.8200826 }}
-                                title='Ubicación de alguien'
-                                description='Jiovany Rafael'
-                            // 21.1557399,-86.8200826
-                            />
-                        </MapView>
-                        <View style={{ flexDirection: 'row' }}>
-                            <FormButton
-                                buttonTitle="Cerrar"
-                                stylesContainer={{ width: position == undefined ? '100%' : '48%', marginRight: position == undefined ? 0 : '4%' }}
-                                stylesText={{ fontSize: 17 }}
-                                onPress={() => setModalMap(false)}
-                            />
-                            {position == undefined ? null : (
-                                <FormButton
-                                    buttonTitle="Ir a Maps"
-                                    stylesContainer={{ width: '48%', backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO }}
-                                    stylesText={{ fontSize: 17 }}
-                                />
-                            )}
-                        </View>
-                    </Card>
-                </View>
-            </Modal>
             <DateTimePickerModal
                 isVisible={dateTimePicker}
                 date={new Date()}
@@ -672,6 +611,25 @@ const ServicesScreen = ({ navigation }) => {
                 closeOnHardwareBackPress={false}
                 onCancelPressed={() => setAlertReschedule(false)}
                 onConfirmPressed={() => rescheduleSave()}
+                messageStyle={{ textAlign: 'center' }}
+                confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO}
+                cancelButtonColor='#ff0000' />
+            <AwesomeAlert
+                show={alertPermission}
+                title='Permiso de ubicación'
+                message='Para poder acceder a la función del mapa, necesita permitir el acceso a su ubicación, ¿qué desea hacer?'
+                showCancelButton={true}
+                showConfirmButton={true}
+                confirmText='Permitir'
+                cancelText='Cancelar'
+                closeOnTouchOutside={false}
+                closeOnHardwareBackPress={false}
+                onCancelPressed={() => setAlertPermission(false)}
+                onConfirmPressed={() => {
+                    setAlertPermission(false);
+                    requestPermissionAndroid();
+                    renderData();
+                }}
                 messageStyle={{ textAlign: 'center' }}
                 confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO}
                 cancelButtonColor='#ff0000' />
