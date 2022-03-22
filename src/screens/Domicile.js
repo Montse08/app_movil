@@ -1,30 +1,44 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Button, Card, CheckBox } from 'react-native-elements';
 import FormButton from '../components/FormButton';
-import InputCard from '../components/InputCard';
+
 
 
 const DomicileScreen = ({ navigation }) => {
 
     const [comment] = useState();
+    const [check, setCheck] = useState(0);
 
     return (
         <View style={styles.viewStyle}>
             <Card>
-                <Card.Title style={styles.titleCard}> ¿DONDE SE ENCUENTRA TU DOMICILIO? </Card.Title>
+                <Card.Title style={styles.titleCard}> ¿A que dirección se le otorgará el servicio? </Card.Title>
                 <Card.Divider />
-                <Text style={styles.text}>
+                    <CheckBox
+                        title='Dirección 1'
+                        checkedColor='#1b1464'
+                        checked={check == 0 ? true : false}
+                        onPress={() => setCheck(0)} 
+                    />
+                    
+                    <CheckBox
+                        title='Dirección 2'
+                        checkedColor='#1b1464'
+                        checked={check == 1 ? true : false}
+                        onPress={() => setCheck(1)} 
+                    />
+                {/* <Text style={styles.text}>
                     Ingresa detalladamente la
                     dirección a la cual solicitas el servicio.
-                </Text>
-                <InputCard
-                    labelValue={comment}
-                    placeholderText="comment"
-                    autocapitalize="characters"
-                    autoCorrect={false} />
+                </Text> */}
                 <FormButton
-                    buttonTitle="SIGUIENTE"
+                
+                    buttonTitle="Agregar nueva dirección"
+                    onPress={() => navigation.navigate('Addresses')}
+                />
+                <FormButton
+                    buttonTitle="Siguiente"
                     onPress={() => navigation.navigate('Pets')}
                 />
             </Card>
@@ -51,10 +65,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     viewStyle: {
-        padding: -2,
-        marginTop: 170,
-        flexDirection: 'row',
-        alignItems: 'center'
+        height: '100%',
+        marginTop: '-10%',
+        justifyContent: 'center'
     },
     text: {
         fontFamily: 'Kufam-SemiboldItalic',
@@ -63,5 +76,5 @@ const styles = StyleSheet.create({
         fontSize: 14,
         padding: 10,
         textAlign: 'center'
-    },
+    }
 })

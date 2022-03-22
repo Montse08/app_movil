@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Button, Text, TextInput, Platform } from 'react-native';
-import { Card, CheckBox } from 'react-native-elements';
+import { Text, View, StyleSheet, TextInput } from 'react-native';
+import { Card } from 'react-native-elements';
+import { ScrollView } from 'react-native-gesture-handler';
 import FormButton from '../components/FormButton';
+import Colors from '../utils/Colors';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Colors from '../utils/Colors';
+import { CheckBox } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
-import { ScrollView } from 'react-native-gesture-handler';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 
-const DateAndTimeScreen = ({ navigation, iconType }) => {
+const EditScheduledAppointmentsScreen = ({ navigation }) => {
+    const [selectedValue, setSelectedValue] = useState("se");
+    const [selectedCheck, setSelectedCheck] = useState(0);
     const [alertCancelar, setAlertCancelar] = useState(false);
-    const [picker, setPicker] = useState("a")
-    const [selectedValue, setSelectedValue] = useState("d");
-    const [datePicker, setDatePicker] = useState(false);
-    const [mode, setMode] = useState('date');
-    const [dateText, setDateText] = useState('');
-    const [timeText, setTimeText] = useState('');
+    const [event, setEvent] = useState(false);
     const [dateStart, setDateStart] = useState('');
+    const [picker, setPicker] = useState("a")
     const [dateEnd, setDateEnd] = useState('');
+    const [check, setCheck] = useState(0);
+    const [dateText, setDateText] = useState('');
+    const [selectedCheckd, setSelectedCheckd] = useState(0);
+    const [datePicker, setDatePicker] = useState(false);
+    const [timeText, setTimeText] = useState('');
+    const [mode, setMode] = useState('date');
     const [typeDate, setTypeDate] = useState('');
-    const [check, setCheck] = useState(false);
-
     const confirmDateTime = (date) => {
+
+
         let currentDateTime = new Date(date);
         if (mode == 'date') {
             if (typeDate == 'seleccion') {
@@ -39,19 +43,9 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
         }
         setDatePicker(false);
     }
-
     return (
         <ScrollView>
             <View>
-                {/* <Text style={styles.textTitle}>Seleccionar fecha y hora </Text> */}
-                <Card>
-                    <View style={styles.viewStyle}>
-                        <FontAwesome name="calendar" size={22} color="#000" />
-                        <Text style={styles.text}>
-                            @contrerasmonce7@gmail.com
-                        </Text>
-                    </View>
-                </Card>
                 <Card>
                     <Text style={styles.textJ}>Selecciona la fecha</Text>
                     <View style={[styles.content, { marginBottom: 35 }]}>
@@ -94,13 +88,37 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
                     </View>
                 </Card>
                 <Card>
-                    <Text style={styles.textJ}>Marca si es un evento recurrente</Text>
-                    <Card.Divider />
-                    <CheckBox
-                        title='Si'
-                        checkedColor='#1b1464'
-                        checked={check}
-                        onPress={() => setCheck(!check)}
+                    <Text style={styles.textJ}>Problema:</Text>
+                    <View>
+                        <TextInput
+                            style={styles.inputMultiline}
+                            underlineColorAndroid="transparent"
+                            textAlignVertical="top"
+                            multiline
+                            numberOfLines={4}
+                            selectionColor="#999" />
+                    </View>
+                </Card>
+                <Card>
+                    <Text style={styles.textJ}>Dirección:</Text>
+                    <View>
+                        <CheckBox
+                            title='Dirección 1'
+                            checkedColor='#1b1464'
+                            checked={check == 0 ? true : false}
+                            onPress={() => setCheck(0)}
+                        />
+
+                        <CheckBox
+                            title='Dirección 2'
+                            checkedColor='#1b1464'
+                            checked={check == 1 ? true : false}
+                            onPress={() => setCheck(1)}
+                        />
+                    </View>
+                    <FormButton
+                        buttonTitle="Agregar nueva dirección"
+                        onPress={() => navigation.navigate('Addresses')}
                     />
                 </Card>
                 <DateTimePickerModal
@@ -113,9 +131,79 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
                     onCancel={() => setDatePicker(false)}
                     minimumDate={new Date()}
                 />
-                {check ? (
+                <Card>
+                    <Text style={styles.textJ}>Tipo de servicio:</Text>
+                    <View>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={{ width: '100%', color: '#000' }}
+                            itemStyle={{ color: '#000', backgroundColor: '#fff' }}
+                            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                            dropdownIconColor="#000" >
+                            <Picker.Item label="Seleccionar" value="se" />
+                            <Picker.Item label="Escolar" value="es" />
+                            <Picker.Item label="Empresarial" value="em" />
+                            <Picker.Item label="Residencial" value="re" />
+                        </Picker>
+                    </View>
+                    <Text style={styles.textM}>Plantas:</Text>
+                    <View>
+                        <CheckBox
+                            title='1'
+                            checkedIcon='dot-circle-o'
+                            checkedColor='#1b1464'
+                            checked={selectedCheck == 0 ? true : false}
+                            onPress={() => setSelectedCheck(0)}
+                            uncheckedIcon='circle-o'
+                        />
+                        <CheckBox
+                            title='2'
+                            checkedIcon='dot-circle-o'
+                            checkedColor='#1b1464'
+                            checked={selectedCheck == 1 ? true : false}
+                            onPress={() => setSelectedCheck(1)}
+                            uncheckedIcon='circle-o'
+                        />
+                        <CheckBox
+                            title='Más de 2'
+                            checkedIcon='dot-circle-o'
+                            checkedColor='#1b1464'
+                            checked={selectedCheck == 2 ? true : false}
+                            onPress={() => setSelectedCheck(2)}
+                            uncheckedIcon='circle-o'
+                        />
+                    </View>
+                    <Text style={styles.textM}>Alberca o palapa:</Text>
+                    <CheckBox
+                        title='Alberca'
+                        checkedIcon='dot-circle-o'
+                        checkedColor='#1b1464'
+                        checked={selectedCheckd == 0 ? true : false}
+                        onPress={() => setSelectedCheckd(0)}
+                        uncheckedIcon='circle-o'
+                    />
+                    <CheckBox
+                        title='Palapa'
+                        checkedIcon='dot-circle-o'
+                        checkedColor='#1b1464'
+                        checked={selectedCheckd == 1 ? true : false}
+                        onPress={() => setSelectedCheckd(1)}
+                        uncheckedIcon='circle-o'
+                    />
+                    <CheckBox
+                        title='Ninguna'
+                        checkedIcon='dot-circle-o'
+                        checkedColor='#1b1464'
+                        checked={selectedCheckd == 2 ? true : false}
+                        onPress={() => setSelectedCheckd(2)}
+                        uncheckedIcon='circle-o'
+                    />
+                </Card>
+                {event ? (
                     <Card>
-                        <Text style={styles.textJ}>Fecha de comienzo</Text>
+                        <Text style={styles.textM}>Evento recurrente</Text>
+                        <Card.Divider />
+                        <Text style={styles.textM}>Fecha de comienzo</Text>
                         <View style={[styles.content, { marginBottom: 35 }]}>
                             <TextInput
                                 style={[styles.inputDisabled, { position: 'absolute', width: '80%' }]}
@@ -135,7 +223,7 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
                                     setTypeDate('start');
                                 }} />
                         </View>
-                        <Text style={styles.textJ}>Fecha de finalización</Text>
+                        <Text style={styles.textM}>Fecha de finalización</Text>
                         <View style={[styles.content, { marginBottom: 35 }]}>
                             <TextInput
                                 style={[styles.inputDisabled, { position: 'absolute', width: '80%' }]}
@@ -203,7 +291,6 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
                                 <Picker.Item label="30" value="bc" />
                                 <Picker.Item label="31" value="xs" />
                             </Picker>
-
                         </View>
                         <Text style={styles.textJ}>Por cuantos meses:</Text>
                         <View>
@@ -214,22 +301,17 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
                                 keyboardType="numeric"
                                 maxLength={2} />
                         </View>
-
                     </Card>
                 ) : null}
-                <FormButton
-                    buttonTitle="ACEPTAR"
-                    stylesContainer={{
-                        marginRight: '5%',
-                        marginLeft: '5%',
-                        width: '90%',
-                        marginBottom: 10
-                    }}
-                    onPress={() => setAlertCancelar(true)} />
+                <Card>
+                    <FormButton buttonTitle="Guardar"
+                        onPress={() => setAlertCancelar(true)} />
+                    <FormButton buttonTitle="Cancelar" />
+                </Card>
                 <AwesomeAlert
                     show={alertCancelar}
-                    title='Cita'
-                    message='¿Estás seguro de agendar la cita?'
+                    title='Editar'
+                    message='¿Estás seguro de editar esta cita?'
                     showCancelButton={true}
                     showConfirmButton={true}
                     confirmText='Aceptar'
@@ -239,35 +321,49 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
                     onCancelPressed={() => setAlertCancelar(false)}
                     onConfirmPressed={() => {
                         setAlertCancelar(false);
-                        navigation.navigate('Appointments');
+                        navigation.navigate('ScheduledAppointments');
                     }}
                     messageStyle={{ textAlign: 'center' }}
                     confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO}
                     cancelButtonColor='#ff0000' />
             </View>
         </ScrollView>
-
-
-
-    );
+    )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-
-    },
-    picker: {
+    content: {
+        flexDirection: 'row',
         width: '100%',
-        color: '#000',
-        borderWidth: 1,
-        marginBottom: 10,
-        borderColor: '#000'
+        alignItems: 'center',
+        marginTop: 20
     },
-
+    textJ: {
+        color: '#000',
+        marginBottom: 10,
+        fontSize: 15
+    },
+    textM: {
+        color: '#000',
+        marginBottom: 10,
+        fontSize: 15,
+        marginTop: 10
+    },
+    button: {
+        backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO,
+        width: '17%',
+        margin: 0,
+        position: 'absolute',
+        right: 0
+    },
+    inputMultiline: {
+        borderWidth: 1,
+        color: '#000',
+        borderRadius: 5,
+        borderColor: '#000',
+        marginBottom: 10,
+        fontSize: 15
+    },
     inputDisabled: {
         borderWidth: 1,
         color: '#000',
@@ -276,50 +372,13 @@ const styles = StyleSheet.create({
         height: 40,
         marginBottom: 10,
         fontSize: 15
-    },
-    text: {
-        color: '#000',
-        fontWeight: 'bold',
-        fontSize: 13,
-        width: -5,
-        padding: 8,
-    },
-    content: {
+    }, viewStyle: {
+        padding: 5,
         flexDirection: 'row',
-        width: '100%',
         alignItems: 'center',
+        width: '100%',
         marginTop: 20
     },
-    textTitle: {
-        fontFamily: 'Cochin',
-        fontSize: 20,
-        marginBottom: 10,
-        color: '#000',
-        textAlign: 'center',
-        marginTop: 15
-    },
-    viewStyle: {
-        padding: 5,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    viewCalendar: {
-        padding: 5,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    textJ: {
-        color: '#000',
-        marginBottom: 10,
-        fontSize: 15
-    },
-    button: {
-        backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO,
-        width: '17%',
-        margin: 0,
-        position: 'absolute',
-        right: 0
-    }
-});
+})
 
-export default DateAndTimeScreen;
+export default EditScheduledAppointmentsScreen;

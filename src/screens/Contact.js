@@ -3,6 +3,7 @@ import { Card } from 'react-native-elements';
 import { View, StyleSheet, Image, Text, TouchableOpacity, Linking } from 'react-native';
 import HeaderScreenComponent from '../components/HeaderScreen';
 import FormButton from '../components/FormButton';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const handleCallPress = async () => {
     await Linking.openURL("tel:+529988878151");
@@ -23,9 +24,9 @@ const handleFacebookPress = async () => {
 const handleYoutubePress = async () => {
     await Linking.openURL("https://www.youtube.com/channel/UCtwlpfj4yg03bnKhBx2VFEA");
 };
-const ContactScreen = () => {
+const ContactScreen = ({ navigation }) => {
     return (
-        <View>
+        <ScrollView>
             <HeaderScreenComponent title='Contacto' />
             <Card>
                 <Card.Title style={{ color: '#000' }}>REDES SOCIALES</Card.Title>
@@ -98,14 +99,18 @@ const ContactScreen = () => {
                     </TouchableOpacity>
                 </View>
             </Card>
-            <View style={{ padding: 20 }}>
+            <Card>
                 <FormButton
                     buttonTitle="WhatsApp"
                     onPress={handleWhatsappPress}
                 />
-            </View>
-        </View>
-
+                <FormButton
+                    buttonTitle="Chat bot"
+                    onPress={() => navigation.navigate('ChatBot')}
+                // onPress={handleWhatsappPress}
+                />
+            </Card>
+        </ScrollView>
     )
 }
 

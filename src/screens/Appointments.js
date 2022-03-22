@@ -14,7 +14,7 @@ const AppointmentsScreen = ({ navigation }) => {
                     <Card.Divider />
                     <Card.Image
                         style={styles.image}
-                        source={require('../assets/fumigin.jpg')}
+                        source={require('../assets/xx.jpg')}
                     />
                     <Card.Divider />
                     <Text style={styles.text}>
@@ -31,7 +31,7 @@ const AppointmentsScreen = ({ navigation }) => {
                             backgroundColor: Colors.PRIMARY_COLOR_NARANJALOGO,
                         }}
                         title="INICIAR"
-                        onPress={() => navigation.navigate('Domicile')}
+                        onPress={() => navigation.navigate('Problem')}
                     />
                 </Card>
             </View>
@@ -43,8 +43,8 @@ export default AppointmentsScreen;
 
 const styles = StyleSheet.create({
     viewStyle: {
-        padding: 13,
-        marginTop: 60,
+        width: '100%',
+        height: '90%',
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     image: {
-        resizeMode: 'center',
+        resizeMode: 'contain',
         width: 300,
         height: 270,
         //      backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO

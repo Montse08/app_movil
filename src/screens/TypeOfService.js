@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Card, CheckBox } from 'react-native-elements';
 import FormButton from '../components/FormButton';
 import { Picker } from '@react-native-picker/picker';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
 const TypeOfServiceScreen = ({ navigation }) => {
 
-    const [selectedValue, setSelectedValue] = useState("d");
+    const [selectedValue, setSelectedValue] = useState("se");
     const [selectedCheck, setSelectedCheck] = useState(0);
     const [selectedCheckd, setSelectedCheckd] = useState(0);
 
@@ -24,11 +24,40 @@ const TypeOfServiceScreen = ({ navigation }) => {
                         itemStyle={{ color: '#000', backgroundColor: '#fff' }}
                         onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
                         dropdownIconColor="#000" >
-                        <Picker.Item label="Escolar" value="d" />
-                        <Picker.Item label="Empresarial" value="s" />
-                        <Picker.Item label="Residencial" value="m" />
-                        <Picker.Item label="Otro" value="a" />
+                        <Picker.Item label="Seleccionar" value="se" />
+                        <Picker.Item label="Escolar" value="es" />
+                        <Picker.Item label="Empresarial" value="em" />
+                        <Picker.Item label="Residencial" value="re" />
                     </Picker>
+                    {selectedValue == 'es' || selectedValue == 'em' ? (
+                        <View>
+                            <Card.Title>Razón social</Card.Title>
+                            <Card.Divider />
+                            <TextInput
+                                style={[styles.inputDisabled, { width: '100%' }]}
+                                underlineColorAndroid="transparent"
+                                editable={true}
+                                maxLength={100} />
+                            <Card.Title>Razón comercial</Card.Title>
+                            <Card.Divider />
+                            <TextInput
+                                style={[styles.inputDisabled, { width: '100%' }]}
+                                underlineColorAndroid="transparent"
+                                editable={true}
+                                maxLength={100} />
+                        </View>
+                    ) : null}
+                    {selectedValue == 'em' ? (
+                        <View>
+                            <Card.Title>RFC</Card.Title>
+                            <Card.Divider />
+                            <TextInput
+                                style={[styles.inputDisabled, { width: '100%' }]}
+                                underlineColorAndroid="transparent"
+                                editable={true}
+                                maxLength={14} />
+                        </View>
+                    ) : null}
                 </Card>
                 <Card>
                     <Card.Title> ¿Con cuantas plantas cuentas? </Card.Title>
@@ -90,7 +119,7 @@ const TypeOfServiceScreen = ({ navigation }) => {
                 <Card>
                     <FormButton
                         buttonTitle="SIGUIENTE"
-                        onPress={() => navigation.navigate('Problem')}
+                        onPress={() => navigation.navigate('Domicile')}
                     />
                 </Card>
             </View >
@@ -99,3 +128,15 @@ const TypeOfServiceScreen = ({ navigation }) => {
 }
 
 export default TypeOfServiceScreen;
+
+const styles = StyleSheet.create({
+    inputDisabled: {
+        borderWidth: 1,
+        color: '#000',
+        borderRadius: 5,
+        borderColor: '#999',
+        height: 40,
+        marginBottom: 10,
+        fontSize: 15
+    }
+})

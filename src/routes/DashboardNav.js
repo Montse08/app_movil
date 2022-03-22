@@ -56,14 +56,45 @@ const DashboardNav = () => {
                 }}
             />
             <Screen
-                name="AppointmentDetail"
-                component={Screens.AppointmentDetailScreen}
+                name="ServiceOrderForm"
+                component={Screens.ServiceOrderFormScreen}
                 options={{
-                    headerTitle: 'CONFIRMACIÓN DE CITA',
+                    headerTitle: 'Orden de Servicio'
+                }}
+            />
+            <Screen
+                name='ChangePassword'
+                component={Screens.ChangePasswordScreen}
+                options={{
+                    headerTitle: 'CAMBIAR CONTRASEÑA',
                     headerTitleAlign: 'center',
                 }}
             />
-            <Screen name="ServiceOrderForm" component={Screens.ServiceOrderFormScreen} options={{ headerTitle: 'Orden de Servicio' }} />
+            <Screen
+                name='Addresses'
+                component={Screens.AddressesScreen}
+                options={{
+                    headerTitle: 'DIRECCIONES',
+                    headerTitleAlign: 'center',
+                }}
+            />
+            <Screen
+                name='ChatBot'
+                component={Screens.ChatBotScreen}
+                options={{
+                    headerTitle: 'CHATBOT',
+                    headerTitleAlign: 'center',
+                }}
+            />
+            <Screen
+                name='EditScheduledAppointments'
+                component={Screens.EditScheduledAppointmentsScreen}
+                options={{
+                    headerTitle: 'EDITAR CITAS PROGRAMADA',
+                    headerTitleAlign: 'center',
+                }}
+            />
+
         </Navigator>
     )
 

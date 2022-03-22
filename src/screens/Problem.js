@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { Card } from 'react-native-elements';
 import FormButton from '../components/FormButton';
 import InputCard from '../components/InputCard';
@@ -18,11 +18,15 @@ const ProblemScreen = ({ navigation }) => {
                 <Text style={styles.text}>
                     Describe especificamente cual es el problema a tratar, plaga o servicio que solicita.
                 </Text>
-                <InputCard
-                    labelValue={comment}
-                    placeholderText="comment"
-                    autocapitalize="characters"
-                    autoCorrect={false} />
+                <TextInput
+                        style={styles.inputMultiline}
+                        underlineColorAndroid="transparent"
+                        textAlignVertical="top"
+                        // value={despues}
+                        // onChangeText={text => setDespues(text)}
+                        multiline
+                        numberOfLines={4}
+                        selectionColor="#999" />
                 <Text style={styles.textF}>
                     Si tienes un problema de termitas se requiere
                     una visita para proporcionar costo y
@@ -30,7 +34,7 @@ const ProblemScreen = ({ navigation }) => {
                 </Text>
                 <FormButton
                     buttonTitle="SIGUIENTE"
-                    onPress={() => navigation.navigate('DateAndTime')}
+                    onPress={() => navigation.navigate('TypeOfService')}
                 />
             </Card>
         </View>
@@ -41,10 +45,9 @@ export default ProblemScreen;
 
 const styles = StyleSheet.create({
     viewStyle: {
-        padding: -1,
-        marginTop: 135,
-        flexDirection: 'row',
-        alignItems: 'center'
+        height: '100%',
+        marginTop: '-10%',
+        justifyContent: 'center'
     },
     textPrivate: {
         flexDirection: 'row',
@@ -78,5 +81,13 @@ const styles = StyleSheet.create({
         fontSize: 12,
         padding: 10,
         textAlign: 'center'
+    },
+    inputMultiline: {
+        borderWidth: 1,
+        color: '#000',
+        borderRadius: 5,
+        borderColor: '#000',
+        marginBottom: 10,
+        fontSize: 15
     },
 })

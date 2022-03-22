@@ -6,7 +6,7 @@ import FormButton from '../components/FormButton';
 import HeaderScreenComponent from '../components/HeaderScreen';
 import Colors from '../utils/Colors';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
     return (
         <ScrollView>
             <View>
@@ -44,11 +44,28 @@ const ProfileScreen = () => {
                         <Card.Divider />
                         <View style={styles.viewStyle}>
                             <Text>Av kabah</Text>
+                            <FormButton
+                                icon="plus-circle"
+                                size={15}
+                                color="#fff"
+                                stylesContainer={styles.button}
+                                onPress={() => navigation.navigate('Addresses')}
+                            // onPress={() => {
+                            //     setDatePicker(true);
+                            //     setMode('date');
+                            //     setTypeDate('start');
+                            // }} />
+                            />
                             {/* <FormButton  icon="user" size={15} color="#000" /> */}
                         </View>
                     </Card>
-                    <Card>
-                        <FormButton buttonTitle="Cambiar contraseña" />
+                    <Card style={{}}>
+                        <FormButton
+                            buttonTitle="Cambiar contraseña"
+                            size={22}
+                            color="#fff"
+                            onPress={() => navigation.navigate('ChangePassword')} />
+                        <FormButton buttonTitle="Eliminar cuenta" />
                         <FormButton buttonTitle="Cerrar sesión" />
                     </Card>
                 </View>
@@ -61,13 +78,25 @@ const ProfileScreen = () => {
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-        viewStyle: {
-            padding: 5,
-            flexDirection: 'row',
-            alignItems: 'center'
-        },
-        formB: {
-            width: 100,
-            height: 50,
-        }
+    viewStyle: {
+        padding: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        marginTop: 20
+    },
+    formB: {
+        width: 100,
+        height: 50,
+    },
+    button: {
+        backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO,
+        width: '13%',
+        margin: 0,
+        height: 40,
+        position: 'absolute',
+        right: 0,
+        borderRadius: 100
+
+    }
 })

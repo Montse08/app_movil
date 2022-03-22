@@ -31,7 +31,7 @@ const PetsScreen = ({ navigation }) => {
                 />
                 <FormButton
                     buttonTitle="SIGUIENTE"
-                    onPress={() => navigation.navigate('TypeOfService')}
+                    onPress={() => navigation.navigate('DateAndTime')}
                 />
             </Card>
         </View>
