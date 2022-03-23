@@ -9,10 +9,9 @@ const ChatBotScreen = () => {
     const [message, setMessage] = useState('');
     const [change, setChange] = useState(false);
 
-    const [messagesBetweenBotPerson, setMessagesBetweenBotPerson] = useState([chatbot[0]]);
+    const [messagesBetweenBotPerson, setMessagesBetweenBotPerson] = useState([chatbot[0], chatbot[1]]);
 
     const renderMessage = ({ item }) => {
-        console.log(item);
         return (
             <View style={{ width: '100%' }}>
                 {item.how == "Bot" ? (
@@ -35,14 +34,41 @@ const ChatBotScreen = () => {
     }
 
     const sendMessage = () => {
-        console.log(messagesBetweenBotPerson.length);
+        let copy = messagesBetweenBotPerson;
+        let bandera = false;
         let mesPer = {
             "message": message,
             "how": "Person",
-            "id_message": messagesBetweenBotPerson.length + 1
+            "id": copy.length + 1
         }
-        let copy = messagesBetweenBotPerson;
         copy.push(mesPer);
+        let text = message.toLowerCase();
+        chatbot.map((value) => {
+            let textNormalize = text.normalize("NFD").replace(/[\u0300-\u036f-\u0020]/g, "");
+            if (value.find === textNormalize) {
+                let mesChat = {
+                    "message": value.message,
+                    "how": value.how,
+                    "id": copy.length + 1
+                }
+                copy.push(mesChat);
+                bandera = true;
+            }
+        });
+        if (!bandera) {
+            let mesChat = {
+                "message": chatbot[5].message,
+                "how": chatbot[5].how,
+                "id": copy.length + 1
+            }
+            copy.push(mesChat);
+            mesChat = {
+                "message": chatbot[6].message,
+                "how": chatbot[6].how,
+                "id": copy.length + 1
+            }
+            copy.push(mesChat);
+        }
         setMessagesBetweenBotPerson(copy);
         setMessage('');
         setChange(!change);
@@ -55,7 +81,7 @@ const ChatBotScreen = () => {
                     <FlatList
                         data={messagesBetweenBotPerson}
                         renderItem={renderMessage}
-                        keyExtractor={item => item.id_message}
+                        keyExtractor={item => item.id}
                         style={{ width: '100%', height: '100%' }} />
                 ) : null}
             </View>

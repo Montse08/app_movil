@@ -9,7 +9,8 @@ import Colors from '../utils/Colors';
 import { Picker } from '@react-native-picker/picker';
 import { ScrollView } from 'react-native-gesture-handler';
 import AwesomeAlert from 'react-native-awesome-alerts';
-
+import * as AddCalendarEvent from 'react-native-add-calendar-event';
+import 'moment/locale/es-mx';
 
 const DateAndTimeScreen = ({ navigation, iconType }) => {
     const [alertCancelar, setAlertCancelar] = useState(false);
@@ -38,6 +39,22 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
             setTimeText(currentDateTime);
         }
         setDatePicker(false);
+    }
+
+    const calendarEvent = () => {
+        let hora = moment(timeText).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]').slice(11, -1);
+        let fecha = moment(dateText).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]').slice(0, 11) + hora + "Z";
+        const eventConfig = {
+            title: 'Cita de fumigación',
+            startDate: fecha,
+            endDate: fecha,
+            location: 'Mi dirección',
+            notes: `La cita de fumigación será el ${moment(dateText).locale('es-mx').format('dddd DD [de] MMMM [de] YYYY')}`
+        };
+
+        AddCalendarEvent.presentEventCreatingDialog(eventConfig)
+            .then(eventInfo => { navigation.navigate('Appointments') })
+            .catch(error => { console.warn(error) });
     }
 
     return (
@@ -239,7 +256,7 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
                     onCancelPressed={() => setAlertCancelar(false)}
                     onConfirmPressed={() => {
                         setAlertCancelar(false);
-                        navigation.navigate('Appointments');
+                        calendarEvent();
                     }}
                     messageStyle={{ textAlign: 'center' }}
                     confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO}

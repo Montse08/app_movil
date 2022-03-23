@@ -35,7 +35,9 @@ const DomicileScreen = ({ navigation }) => {
                 <FormButton
                 
                     buttonTitle="Agregar nueva dirección"
-                    onPress={() => navigation.navigate('Addresses')}
+                    onPress={() => navigation.navigate('Addresses', {
+                        screen: 'Domicile'
+                    })}
                 />
                 <FormButton
                     buttonTitle="Siguiente"

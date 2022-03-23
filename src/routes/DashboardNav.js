@@ -94,7 +94,6 @@ const DashboardNav = () => {
                     headerTitleAlign: 'center',
                 }}
             />
-            <Screen name="ServiceOrderForm" component={Screens.ServiceOrderFormScreen} options={{ headerTitle: 'Orden de Servicio' }} />
             <Screen name="Signature" component={Screens.SignatureScreen} options={{ headerTitle: 'Firmas' }} />
             <Screen name="Maps" component={Screens.MapsScreen} options={{ headerTitle: 'Mapa' }} />
         </Navigator>

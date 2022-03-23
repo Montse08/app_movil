@@ -49,14 +49,10 @@ const ProfileScreen = ({ navigation }) => {
                                 size={15}
                                 color="#fff"
                                 stylesContainer={styles.button}
-                                onPress={() => navigation.navigate('Addresses')}
-                            // onPress={() => {
-                            //     setDatePicker(true);
-                            //     setMode('date');
-                            //     setTypeDate('start');
-                            // }} />
+                                onPress={() => navigation.navigate('Addresses', {
+                                    screen: 'Prophile'
+                                })}
                             />
-                            {/* <FormButton  icon="user" size={15} color="#000" /> */}
                         </View>
                     </Card>
                     <Card style={{}}>

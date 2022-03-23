@@ -1,37 +1,44 @@
 [
     {
-        "message": "Hola",
-        "id_message": 1,
-        "how": "Bot"
+        "message": "Hola soy el chat bot de Fumicar:D",
+        "how": "Bot",
+        "find": null,
+        "id": 1
     },
     {
-        "message": "Hola",
-        "id_message": 2,
-        "how": "Bot"
+        "message": "Bienvenido al chat de Fumicar.\nLe recordamos que este es un chat de respuestas rapidas por favor indique la opción deseada:\nContratar servicio\nIr a la página web\nNúmeros teléfonicos\nEscriba una opción para continuar",
+        "how": "Bot",
+        "find": null,
+        "id": 2
     },
     {
-        "message": "Hola",
-        "id_message": 3,
-        "how": "Bot"
+        "message": "Fumicar cuenta con diferentes tipos de servicio, para saber más al respecto y elegir el servicio que necesita vaya a Inicio. Si ya sabe que servicio necesita vaya al apartado de citas para agendar su próxima cita:D ",
+        "how": "Bot",
+        "find": "contratarservicio",
+        "id": 3
     },
     {
-        "message": "Hola",
-        "id_message": 4,
-        "how": "Bot"
+        "message": "Para visitar nuestra página web, ve a www.fumicar.com",
+        "how": "Bot",
+        "find": "iralapaginaweb",
+        "id": 4
     },
     {
-        "message": "Hola",
-        "id_message": 5,
-        "how": "Bot"
+        "message": "¡Llamanos o whatsappeanos! al 998 887 8151",
+        "how": "Bot",
+        "find": "numerostelefonicos",
+        "id": 5
     },
     {
-        "message": "Hola",
-        "id_message": 6,
-        "how": "Bot"
+        "message": "Lo siento esa opción no es compatible con mis respuestas",
+        "how": "Bot",
+        "find": null,
+        "id": 6
     },
     {
-        "message": "Hola",
-        "id_message": 7,
-        "how": "Bot"
+        "message": "Le recordamos que este es un chat de respuestas rapidas por favor indique la opción deseada:\nContratar servicio\nHorarios de la empresa\nIr a la página web\nNúmeros teléfonicos\nEscriba una opción para continuar",
+        "how": "Bot",
+        "find": null,
+        "id": 7
     }
 ]
