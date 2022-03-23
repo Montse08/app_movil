@@ -26,7 +26,7 @@ export const MenuClient = [
         'component': Screens.ProfileScreen,
         'icon': 'user-circle-o'
     }
-]
+];
 
 export const MenuTecnico = [
     {
@@ -53,5 +53,68 @@ export const MenuTecnico = [
         'name': 'ProfileTechnical',
         'component': Screens.ProfileTechnicalScreen,
         'icon': 'user-circle-o'
+    }
+];
+
+export const MenuDashboard = [
+    {
+        'name': 'Domicile',
+        'component': Screens.DomicileScreen,
+        'headerTitle': 'Domicilio'
+    },
+    {
+        'name': 'Pets',
+        'component': Screens.PetsScreen,
+        'headerTitle': 'Mascotas'
+    },
+    {
+        'name': 'TypeOfService',
+        'component': Screens.TypeOfServiceScreen,
+        'headerTitle': 'Tipo de Servicio'
+    },
+    {
+        'name': 'Problem',
+        'component': Screens.ProblemScreen,
+        'headerTitle': 'Problema'
+    },
+    {
+        'name': 'DateAndTime',
+        'component': Screens.DateAndTimeScreen,
+        'headerTitle': 'Fecha y Hora'
+    },
+    {
+        'name': 'ServiceOrderForm',
+        'component': Screens.ServiceOrderFormScreen,
+        'headerTitle': 'Orden de Servicio'
+    },
+    {
+        'name': 'ChangePassword',
+        'component': Screens.ChangePasswordScreen,
+        'headerTitle': 'Cambiar Contraseña'
+    },
+    {
+        'name': 'Addresses',
+        'component': Screens.AddressesScreen,
+        'headerTitle': 'Direcciones'
+    },
+    {
+        'name': 'ChatBot',
+        'component': Screens.ChatBotScreen,
+        'headerTitle': 'ChatBot'
+    },
+    {
+        'name': 'EditScheduledAppointments',
+        'component': Screens.EditScheduledAppointmentsScreen,
+        'headerTitle': 'Editar Citas Programadas'
+    },
+    {
+        'name': 'Signature',
+        'component': Screens.SignatureScreen,
+        'headerTitle': 'Firmas'
+    },
+    {
+        'name': 'OrderDetail',
+        'component': Screens.OrderDetailScreen,
+        'headerTitle': 'Detalle de la orden'
     }
 ];

@@ -22,4 +22,4 @@ export { default as AddressesScreen } from './Addresses';
 export { default as ChatBotScreen } from './ChatBot';
 export { default as EditScheduledAppointmentsScreen } from './EditScheduledAppointments';
 export { default as SignatureScreen } from './Signature';
-export { default as MapsScreen } from './Maps';
+export { default as OrderDetailScreen } from './OrderDetail';

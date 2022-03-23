@@ -11,12 +11,13 @@ import 'moment/locale/es-mx';
 import { Data } from '../utils';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import MapView, { Marker } from 'react-native-maps';
 
 const ServicesScreen = ({ navigation }) => {
     const [dataCopy, setDataCopy] = useState(Data);
-    const [permission, setPermission] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalNota, setModalNota] = useState(false);
+    const [modalMaps, setModalMaps] = useState(false);
     const [alertPermission, setAlertPermission] = useState(false);
     const [alertMarcar, setAlertMarcar] = useState(false);
     const [alertInfo, setAlertInfo] = useState(false);
@@ -254,14 +255,7 @@ const ServicesScreen = ({ navigation }) => {
                         size={15}
                         color="#fff"
                         stylesContainer={{ backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO, marginTop: 0, position: 'absolute', width: 35, right: 0, height: 35, borderRadius: 100 }}
-                        onPress={() => {
-                            console.log(permission);
-                            if (permission) {
-                                navigation.navigate('Maps');
-                            } else {
-                                setAlertPermission(true);
-                            }
-                        }} />
+                        onPress={() => setModalMaps(true)} />
                 </View>
                 <Text style={{ marginBottom: 0, color: textColor, fontWeight: 'bold', fontSize: 18 }}>
                     {title}
@@ -289,23 +283,19 @@ const ServicesScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        requestPermissionAndroid().then(() => {
-            console.log(permission);
-            renderData();
-        });
+        renderData();
+        requestPermissionAndroid();
     }, []);
 
     const requestPermissionAndroid = async () => {
         PermissionsAndroid.check(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         ).then(async checkLocation => {
-            if (checkLocation) {
-                setPermission(true);
-            } else {
+            if (!checkLocation) {
                 try {
                     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,);
-                    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                        setPermission(true);
+                    if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+                        console.log('No dieron permiso');
                     }
                 } catch (err) {
                     console.warn('error permissions android', err);
@@ -421,6 +411,7 @@ const ServicesScreen = ({ navigation }) => {
                                 onPress={() => {
                                     if (nota != '') {
                                         setModalNota(false);
+                                        rescheduleSave();
                                     }
                                 }}
                                 disabled={nota != '' ? false : true} />
@@ -492,6 +483,36 @@ const ServicesScreen = ({ navigation }) => {
                                     setFecha('');
                                     setHora('');
                                 }} />
+                        </View>
+                    </Card>
+                </View>
+            </Modal>
+            <Modal isVisible={modalMaps}>
+                <View style={{ alignContent: 'center' }}>
+                    <Card>
+                        <Card.Title style={{ fontSize: 18 }}>Ubicación del servicio</Card.Title>
+                        <Card.Divider />
+                        <MapView
+                            initialRegion={{
+                                latitude: 21.1557399,
+                                longitude: -86.8200826,
+                                latitudeDelta: 0.0140,
+                                longitudeDelta: 0.0131,
+                            }}
+                            showsUserLocation
+                            loadingEnabled
+                            style={{ width: '100%', height: 400 }}>
+                            <Marker
+                                coordinate={{ latitude: 21.1557399, longitude: -86.8200826 }}
+                                title='Ubicación de alguien'
+                                description='Jiovany Rafael'
+                            />
+                        </MapView>
+                        <View style={{ flexDirection: 'row', width: '100%' }}>
+                            <FormButton
+                                buttonTitle="Cancelar"
+                                stylesText={{ fontSize: 15 }}
+                                onPress={() => setModalMaps(false)} />
                         </View>
                     </Card>
                 </View>
@@ -591,7 +612,10 @@ const ServicesScreen = ({ navigation }) => {
                 cancelText='Cancelar'
                 closeOnTouchOutside={false}
                 closeOnHardwareBackPress={false}
-                onCancelPressed={() => setAlertNota(false)}
+                onCancelPressed={() => {
+                    setAlertNota(false);
+                    rescheduleSave();
+                }}
                 onConfirmPressed={() => {
                     setAlertNota(false);
                     setModalNota(true);
