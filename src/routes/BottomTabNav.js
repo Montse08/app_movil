@@ -4,6 +4,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../utils/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Menu } from '../utils';
+import { ActivityIndicator, Text, View } from 'react-native';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -43,22 +44,35 @@ const BottomTabNav = () => {
         )
     }
 
-    return (
-        <Navigator
-            initialRouteName={typeUser == 'cliente' ? "Home" : "Services"}
-            screenOptions={{
-                headerShown: false,
-                tabBarStyle: {
-                    backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO
-                }
-            }} >
-            {typeUser == 'cliente' ? (
-                menu.MenuClient.map((item, index) => renderScreen(item, index))
-            ) : (
-                menu.MenuTecnico.map((item, index) => renderScreen(item, index))
-            )}
-        </Navigator>
-    );
+    const renderNavigation = () => {
+        if (typeUser == '') {
+            return (
+                <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                    <ActivityIndicator size={40} color={Colors.PRIMARY_COLOR_AZULDELLOGO} />
+                    <Text style={{ color: '#000', fontSize: 18 }}>Cargando</Text>
+                </View>
+            )
+        } else {
+            return (
+                <Navigator
+                    initialRouteName={typeUser == 'cliente' ? "Home" : "Services"}
+                    screenOptions={{
+                        headerShown: false,
+                        tabBarStyle: {
+                            backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO
+                        }
+                    }} >
+                    {typeUser == 'cliente' ? (
+                        menu.MenuClient.map((item, index) => renderScreen(item, index))
+                    ) : (
+                        menu.MenuTecnico.map((item, index) => renderScreen(item, index))
+                    )}
+                </Navigator>
+            );
+        }
+    }
+
+    return renderNavigation();
 }
 
 export default BottomTabNav;

@@ -1,11 +1,29 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabNav from './BottomTabNav';
-import * as Screens from '../screens';
+import Colors from '../utils/Colors';
+import { Menu } from '../utils';
 
 const { Navigator, Screen } = createStackNavigator();
 
 const DashboardNav = () => {
+    const renderScreens = (item, index) => {
+        return (
+            <Screen
+                key={index}
+                name={item.name}
+                component={item.component}
+                options={{
+                    headerTitle: item.headerTitle,
+                    cardStyle: { backgroundColor: '#fff' },
+                    headerStyle: { backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO },
+                    headerTitleStyle: { color: '#fff' },
+                    headerTintColor: '#fff'
+                }}
+            />
+        );
+    }
+
     return (
         <Navigator
             initialRouteName="BottomTab" >
@@ -15,87 +33,7 @@ const DashboardNav = () => {
                 options={{
                     headerShown: false
                 }} />
-            <Screen
-                name="Domicile"
-                component={Screens.DomicileScreen}
-                options={{
-                    headerTitle: 'Domicilio',
-                    headerTitleAlign: 'center',
-                }}
-            />
-            <Screen
-                name="Pets"
-                component={Screens.PetsScreen}
-                options={{
-                    headerTitle: 'Mascotas',
-                    headerTitleAlign: 'center',
-                }}
-            />
-            <Screen
-                name="TypeOfService"
-                component={Screens.TypeOfServiceScreen}
-                options={{
-                    headerTitle: 'Tipo de servicio',
-                    headerTitleAlign: 'center',
-                }}
-            />
-            <Screen
-                name="Problem"
-                component={Screens.ProblemScreen}
-                options={{
-                    headerTitle: 'Problema',
-                    headerTitleAlign: 'center',
-                }}
-            />
-            <Screen
-                name="DateAndTime"
-                component={Screens.DateAndTimeScreen}
-                options={{
-                    headerTitle: 'FECHA Y HORA',
-                    headerTitleAlign: 'center',
-                }}
-            />
-            <Screen
-                name="ServiceOrderForm"
-                component={Screens.ServiceOrderFormScreen}
-                options={{
-                    headerTitle: 'Orden de Servicio'
-                }}
-            />
-            <Screen
-                name='ChangePassword'
-                component={Screens.ChangePasswordScreen}
-                options={{
-                    headerTitle: 'CAMBIAR CONTRASEÑA',
-                    headerTitleAlign: 'center',
-                }}
-            />
-            <Screen
-                name='Addresses'
-                component={Screens.AddressesScreen}
-                options={{
-                    headerTitle: 'DIRECCIONES',
-                    headerTitleAlign: 'center',
-                }}
-            />
-            <Screen
-                name='ChatBot'
-                component={Screens.ChatBotScreen}
-                options={{
-                    headerTitle: 'CHATBOT',
-                    headerTitleAlign: 'center',
-                }}
-            />
-            <Screen
-                name='EditScheduledAppointments'
-                component={Screens.EditScheduledAppointmentsScreen}
-                options={{
-                    headerTitle: 'EDITAR CITAS PROGRAMADA',
-                    headerTitleAlign: 'center',
-                }}
-            />
-            <Screen name="Signature" component={Screens.SignatureScreen} options={{ headerTitle: 'Firmas' }} />
-            <Screen name="Maps" component={Screens.MapsScreen} options={{ headerTitle: 'Mapa' }} />
+            {Menu.MenuDashboard.map((item, index) => renderScreens(item, index))}
         </Navigator>
     )
 

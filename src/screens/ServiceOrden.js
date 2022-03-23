@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { Card } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { HeaderScreen } from '../components';
 import FormButton from '../components/FormButton';
 import { Data } from '../utils';
+import moment from 'moment';
+import 'moment/locale/es-mx';
 
-const ServiceOrdenScreen = () => {
+const ServiceOrdenScreen = ({ navigation }) => {
     const [data, setData] = useState();
 
     useEffect(() => {
@@ -16,20 +18,28 @@ const ServiceOrdenScreen = () => {
     const renderData = (value, index) => {
         return (
             <Card key={index} containerStyle={[styles.elevation, { borderRadius: 10 }]}>
-                <Card.Title>{value.title}</Card.Title>
+                <Card.Title style={{ fontSize: 18, color: value.iconColor }}>{value.title}</Card.Title>
                 <Card.Divider />
-                <Text style={{ color: '#000' }}>{value.description}</Text>
-                <Text style={{ color: '#000' }}>{value.trade_name}</Text>
-                <FormButton buttonTitle="Ver detalles" />
+                <FormButton
+                    icon="ellipsis-v"
+                    size={18}
+                    color={value.iconColor}
+                    stylesContainer={styles.buton}
+                    onPress={() => navigation.navigate('OrderDetail')} />
+                <Text style={{ color: '#000' }}>Estado: {value.status}</Text>    
+                <Text style={{ color: '#000' }}>Dirección: {value.description}</Text>
+                <Text style={{ color: '#000' }}>Cliente: {value.trade_name}</Text>
             </Card>
         );
     }
 
     return (
-        <ScrollView contentContainerStyle={{ backgroundColor: '#fff', height: '100%' }}>
-            <HeaderScreen title="Ordenes de Servicio"></HeaderScreen>
+        <ScrollView contentContainerStyle={{ backgroundColor: '#fff', paddingBottom: 10 }}>
+            <HeaderScreen title="Ordenes de servicio"></HeaderScreen>
+            <Text style={{ color: '#999', marginTop: 10, textAlign: 'right', marginRight: 15 }}>
+                {moment(new Date()).locale('es-mx').format('dddd DD [de] MMMM [de] YYYY')}
+            </Text>
             {Data.map((value, index) => renderData(value, index))}
-            <View style={{ marginTop: 10 }}></View>
         </ScrollView>
     );
 }
@@ -45,5 +55,15 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         elevation: 5
+    },
+    buton: {
+        backgroundColor: 'transparent',
+        marginTop: 0,
+        width: 40,
+        height: 40,
+        position: 'absolute',
+        borderRadius: 100,
+        right: 0,
+        top: -5
     }
 });

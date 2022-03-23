@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Card } from 'react-native-elements';
 import Colors from '../utils/Colors';
 import { Picker } from '@react-native-picker/picker';
@@ -9,10 +9,13 @@ import 'moment/locale/es-mx';
 
 const WelcomeTechnicalScreen = ({ navigation }) => {
     const [selectedValue, setSelectedValue] = useState(0);
+    const [kilometraje, setKilometraje] = useState('');
 
     const aceptar = () => {
         if (selectedValue != 0) {
             navigation.navigate('Dashboard');
+            setSelectedValue(0);
+            setKilometraje('');
         }
     }
 
@@ -42,7 +45,17 @@ const WelcomeTechnicalScreen = ({ navigation }) => {
                     <Picker.Item label="Audi" value={2} />
                     <Picker.Item label="Chevrolet" value={3} />
                 </Picker>
-                <FormButton buttonTitle='Aceptar' onPress={() => aceptar()} disabled={selectedValue != 0 ? false : true} />
+                <Text style={{ color: '#000', fontSize: 18 }}>Introduce el kilometraje</Text>
+                <TextInput
+                    style={[styles.input, { paddingLeft: 10, marginTop: 5 }]}
+                    underlineColorAndroid="transparent"
+                    placeholder="Kilometraje"
+                    placeholderTextColor="#999"
+                    onChangeText={text => setKilometraje(text)}
+                    value={kilometraje == '' ? '' : kilometraje}
+                    keyboardType="numeric"
+                />
+                <FormButton buttonTitle='Aceptar' onPress={() => aceptar()} disabled={selectedValue != 0 && kilometraje != ''  ? false : true} />
             </Card>
         </View>
     )
@@ -61,7 +74,15 @@ const styles = StyleSheet.create({
     logo: {
         height: 90,
         width: '100%',
-        resizeMode: 'contain',
-        // marginBottom: 25
+        resizeMode: 'contain'
+    },
+    input: {
+        borderWidth: 1,
+        color: '#000',
+        borderRadius: 5,
+        borderColor: '#000',
+        height: 40,
+        marginBottom: 10,
+        fontSize: 15
     }
 })

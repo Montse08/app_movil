@@ -12,3 +12,4 @@ export { default as DataServicio } from './DataServicio.json';
 export { default as DataProductos } from './DataProductos.json';
 export { default as DataCalendar } from './DataCalendar.json';
 export { default as API_GOOGLE } from './api-google.json';
+export { default as DataKilometraje } from './DataKilometraje.json';
