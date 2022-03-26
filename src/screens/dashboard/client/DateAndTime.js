@@ -267,9 +267,6 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
                     cancelButtonColor='#ff0000' />
             </View>
         </ScrollView>
-
-
-
     );
 }
 

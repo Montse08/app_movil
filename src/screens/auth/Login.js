@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
-import { Auth, UserModel } from "../utils";
+import { Auth, UserModel } from "../../utils";
 import { useForm, Controller } from 'react-hook-form';
 import { Alert, FormButton, Forminput } from "../../components";
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { Colors, Menu } from '../utils';
+import { Colors, Menu, UserCache } from '../utils';
 import { ActivityIndicator, Text, View } from 'react-native';
 
 const { Navigator, Screen } = createBottomTabNavigator();
