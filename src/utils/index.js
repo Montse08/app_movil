@@ -1,12 +1,10 @@
-import * as Menu from './Menu';
-import * as Globals from './Globals';
 import * as ConectionApi from './conectionApi';
 
 export * from './api';
 export * from './cache';
 export * from './config';
 export * from './models';
-export { Menu, ConectionApi, Globals };
+export { ConectionApi };
 export { default as Data } from './Data.json';
 export { default as DataOrder } from './DataOrder.json';
 export { default as Chatbot } from './Chatbot.json';

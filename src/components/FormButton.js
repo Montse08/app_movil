@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { windowHeight } from "../utils/Dimentions";
+import { windowHeight } from "../utils/config/Dimentions";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Colors from "../utils/Colors";
+import { Colors } from "../utils";
 
 const FormButton = ({ buttonTitle, stylesText, stylesContainer, icon, size, color, ...rest }) => {
     return (

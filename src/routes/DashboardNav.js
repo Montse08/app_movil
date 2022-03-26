@@ -1,8 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabNav from './BottomTabNav';
-import Colors from '../utils/Colors';
-import { Menu } from '../utils';
+import { Colors, Menu } from '../utils';
 
 const { Navigator, Screen } = createStackNavigator();
 

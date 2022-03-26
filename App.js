@@ -3,14 +3,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AuthNav, DashboardNav } from "./src/routes";
 import { StatusBar, View } from "react-native";
-import Colors from "./src/utils/Colors";
 
 const { Navigator, Screen } = createStackNavigator();
 
 const App = () => {
   return (
     <View style={{ flex: 1 }}>
-      <StatusBar backgroundColor={Colors.PRIMARY_COLOR_AZULDELLOGO} barStyle="light-content" />
+      <StatusBar backgroundColor="#1b1464" barStyle="light-content" />
       <NavigationContainer>
         <Navigator initialRouteName="Auth" screenOptions={{ headerShown: false }}>
           <Screen name="Auth" component={AuthNav} />
