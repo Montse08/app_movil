@@ -1,4 +1,4 @@
-import * as Screens from "../screens"
+import * as Screens from "../screens";
 
 export const MenuClient = [
     {

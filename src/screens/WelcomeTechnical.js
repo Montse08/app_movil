@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Card } from 'react-native-elements';
 import Colors from '../utils/Colors';
@@ -6,10 +6,12 @@ import { Picker } from '@react-native-picker/picker';
 import FormButton from '../components/FormButton';
 import moment from 'moment';
 import 'moment/locale/es-mx';
+import { ConectionApi } from '../utils';
 
 const WelcomeTechnicalScreen = ({ navigation }) => {
-    const [selectedValue, setSelectedValue] = useState(0);
+    const [selectedValue, setSelectedValue] = useState(-1);
     const [kilometraje, setKilometraje] = useState('');
+    const [automobiles, setAutomobiles] = useState([]);
 
     const aceptar = () => {
         if (selectedValue != 0) {
@@ -18,6 +20,18 @@ const WelcomeTechnicalScreen = ({ navigation }) => {
             setKilometraje('');
         }
     }
+
+    const getAutomobiles = async () => {
+        await ConectionApi.list_automobile().then(
+            resp => {
+                setAutomobiles(resp);
+            }
+        );
+    }
+
+    useEffect(() => {
+        getAutomobiles();
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -38,12 +52,15 @@ const WelcomeTechnicalScreen = ({ navigation }) => {
                     selectedValue={selectedValue}
                     style={{ width: '100%', color: '#000' }}
                     itemStyle={{ color: '#000', backgroundColor: '#fff' }}
-                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    onValueChange={(itemValue, itemIndex) => {
+                        setSelectedValue(itemValue);
+                        console.log(itemValue);
+                    }}
                     dropdownIconColor="#000" >
-                    <Picker.Item label="Seleccionar" value={0} />
-                    <Picker.Item label="Renault" value={1} />
-                    <Picker.Item label="Audi" value={2} />
-                    <Picker.Item label="Chevrolet" value={3} />
+                    <Picker.Item label="Seleccionar" value={-1} />
+                    {automobiles.map(value => (
+                        <Picker.Item key={value.id} label={`${value.model} ${value.plate}`} value={value.id} />
+                    ))}
                 </Picker>
                 <Text style={{ color: '#000', fontSize: 18 }}>Introduce el kilometraje</Text>
                 <TextInput
@@ -55,7 +72,7 @@ const WelcomeTechnicalScreen = ({ navigation }) => {
                     value={kilometraje == '' ? '' : kilometraje}
                     keyboardType="numeric"
                 />
-                <FormButton buttonTitle='Aceptar' onPress={() => aceptar()} disabled={selectedValue != 0 && kilometraje != ''  ? false : true} />
+                <FormButton buttonTitle='Aceptar' onPress={() => aceptar()} disabled={selectedValue != 0 && kilometraje != '' ? false : true} />
             </Card>
         </View>
     )
