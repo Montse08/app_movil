@@ -31,7 +31,7 @@ const AppointmentsScreen = ({ navigation }) => {
                             backgroundColor: Colors.PRIMARY_COLOR_NARANJALOGO,
                         }}
                         title="INICIAR"
-                        onPress={() => navigation.navigate('Problem')}
+                        onPress={() => navigation.navigate('Domicile')}
                     />
                 </Card>
             </View>

@@ -119,7 +119,7 @@ const TypeOfServiceScreen = ({ navigation }) => {
                 <Card>
                     <FormButton
                         buttonTitle="SIGUIENTE"
-                        onPress={() => navigation.navigate('Domicile')}
+                        onPress={() => navigation.navigate('DateAndTime')}
                     />
                 </Card>
             </View >

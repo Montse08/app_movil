@@ -118,7 +118,9 @@ const EditScheduledAppointmentsScreen = ({ navigation }) => {
                     </View>
                     <FormButton
                         buttonTitle="Agregar nueva dirección"
-                        onPress={() => navigation.navigate('Addresses')}
+                        onPress={() => navigation.navigate('Addresses', {
+                            'screen': 'EditScheduledAppointments'
+                        })}
                     />
                 </Card>
                 <DateTimePickerModal
@@ -306,7 +308,6 @@ const EditScheduledAppointmentsScreen = ({ navigation }) => {
                 <Card>
                     <FormButton buttonTitle="Guardar"
                         onPress={() => setAlertCancelar(true)} />
-                    <FormButton buttonTitle="Cancelar" />
                 </Card>
                 <AwesomeAlert
                     show={alertCancelar}

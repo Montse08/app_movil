@@ -38,8 +38,6 @@ const ChangePasswordScreen = ({ navigation }) => {
                     buttonTitle="Actualizar contraseña"
                     onPress={() => setAlertCancelar(true)}
                     />
-                <FormButton
-                    buttonTitle="Cancelar" />
             </Card>
             <AwesomeAlert
                 show={alertCancelar}
@@ -54,7 +52,7 @@ const ChangePasswordScreen = ({ navigation }) => {
                 onCancelPressed={() => setAlertCancelar(false)}
                 onConfirmPressed={() => {
                     setAlertCancelar(false);
-                    navigation.navigate('Contact');
+                    navigation.navigate('Prophile');
                 }}
                 messageStyle={{ textAlign: 'center' }}
                 confirmButtonColor={Colors.PRIMARY_COLOR_AZULDELLOGO}

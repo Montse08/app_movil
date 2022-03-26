@@ -60,7 +60,7 @@ export const MenuDashboard = [
     {
         'name': 'Domicile',
         'component': Screens.DomicileScreen,
-        'headerTitle': 'Domicilio'
+        'headerTitle': 'Cliente y dirección'
     },
     {
         'name': 'Pets',
@@ -116,5 +116,15 @@ export const MenuDashboard = [
         'name': 'OrderDetail',
         'component': Screens.OrderDetailScreen,
         'headerTitle': 'Detalle de la orden'
+    },
+    {
+        'name': 'Client',
+        'component': Screens.ClientScreen,
+        'headerTitle': 'Cliente'
+    },
+    {
+        'name': 'AddClient',
+        'component': Screens.AddClientScreen,
+        'headerTitle': 'Agregar cliente'
     }
 ];

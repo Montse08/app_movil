@@ -39,6 +39,10 @@ const DateAndTimeScreen = ({ navigation, iconType }) => {
             setTimeText(currentDateTime);
         }
         setDatePicker(false);
+        let hora = moment(timeText).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]').slice(11, -1);
+        let fecha = moment(dateText).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]').slice(0, 11) + hora + "Z";
+        console.log(timeText);
+        console.log(dateText);
     }
 
     const calendarEvent = () => {

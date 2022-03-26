@@ -23,3 +23,5 @@ export { default as ChatBotScreen } from './ChatBot';
 export { default as EditScheduledAppointmentsScreen } from './EditScheduledAppointments';
 export { default as SignatureScreen } from './Signature';
 export { default as OrderDetailScreen } from './OrderDetail';
+export { default as ClientScreen } from './Client';
+export { default as AddClientScreen } from "./AddClient";

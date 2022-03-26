@@ -14,8 +14,8 @@ const Login = ({ navigation }) => {
 
     const userType = async () => {
         try {
-            await AsyncStorage.setItem('user_type', 'tecnico');
-            navigation.navigate('Welcome');
+            await AsyncStorage.setItem('user_type', 'cliente');
+            navigation.navigate('Dashboard');
         } catch (error) {
             console.log(error);
         }

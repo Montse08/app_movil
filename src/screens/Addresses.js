@@ -9,7 +9,7 @@ import Colors from '../utils/Colors';
 import { ActivityIndicator } from 'react-native-paper';
 
 const AddressesScreen = ({ route, navigation }) => {
-    const { screen } = route.params;
+    const { screen, client } = route.params;
     const [position, setPosition] = useState('');
     const [alertError, setAlertError] = useState(false);
     const [alertPermissionDenegate, setAlertPermissionDenegate] = useState(false);
@@ -186,7 +186,7 @@ const AddressesScreen = ({ route, navigation }) => {
                 }}
                 onCancelPressed={() => {
                     setAlertPermissionDenegate(false);
-                    navigation.navigate(screen == 'Domicile' ? 'Appointments' : screen);
+                    navigation.navigate(screen);
                 }}
                 closeOnHardwareBackPress={false}
                 closeOnTouchOutside={false} />
