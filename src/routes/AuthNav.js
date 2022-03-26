@@ -1,7 +1,6 @@
 import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen, SingUpScreen, WelcomeTechnicalScreen } from "../screens";
-import { Text } from 'react-native';
 
 const { Navigator, Screen } = createStackNavigator();
 
