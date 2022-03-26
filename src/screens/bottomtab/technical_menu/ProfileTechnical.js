@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Avatar, Card } from 'react-native-elements';
-import { Colors } from '../../../utils';
+import { Colors, UserCache } from '../../../utils';
 import { HeaderScreen, FormButton } from '../../../components';
 
 const ProfileTechnicalScreen = ({ navigation }) => {
+    const [user, setUser] = useState([]);
+
+    const getUser = async () => {
+        try {
+            let data = await UserCache.getUser();
+            setUser(JSON.parse(data));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <ScrollView contentContainerStyle={{ backgroundColor: '#fff', height: '100%' }}>
             <View>
@@ -17,29 +28,32 @@ const ProfileTechnicalScreen = ({ navigation }) => {
                     <Avatar
                         size={130}
                         rounded
-                        title="AH"
+                        title={`${user.name.slice(0, 1)}${user.last_name.slice(0, 1)}`}
                         containerStyle={{ backgroundColor: Colors.PRIMARY_COLOR_NARANJALOGO }}
                     />
                     <Text
                         style={{ fontSize: 18, marginTop: 10, color: "#000" }}>
-                        Ángel Hernandez Cortes
+                        {user.username}
                     </Text>
                 </View>
                 <View style={{ marginTop: -15 }}>
                     <Card containerStyle={[styles.elevation, { borderRadius: 10 }]}>
                         <Card.Title>Datos personales</Card.Title>
                         <Card.Divider />
-                        <Text style={{ color: '#000' }}>Ángel Hernandez Cortes</Text>
+                        <Text style={{ color: '#000' }}>{user.name.slice(0, 1)} {user.last_name.slice(0, 1)}</Text>
                     </Card>
                     <Card containerStyle={[styles.elevation, { borderRadius: 10 }]}>
                         <Card.Title>Datos de la cuenta</Card.Title>
                         <Card.Divider />
-                        <Text style={{ color: '#000' }}>Nombre de usuario: Ángel</Text>
-                        <Text style={{ color: '#000' }}>Correo: angel@gmail.com</Text>
+                        <Text style={{ color: '#000' }}>Nombre de usuario: {user.username}</Text>
+                        <Text style={{ color: '#000' }}>Correo: {user.email}</Text>
                         <Text style={{ color: '#000' }}>Contraseña: ************</Text>
                     </Card>
                     <Card containerStyle={[styles.elevation, { borderRadius: 10 }]}>
-                        <FormButton buttonTitle="Cerrar sesión" onPress={() => navigation.navigate('Login')} />
+                        <FormButton buttonTitle="Cerrar sesión" onPress={() => {
+                            navigation.navigate('Login');
+                            UserCache.removeAll();
+                        }} />
                     </Card>
                 </View>
             </View>
