@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import AwesomeAlert from "react-native-awesome-alerts";
-import Colors from "../utils/Colors";
+import { Colors } from "../utils";
 // import Toast from 'react-native-toast-message'
 
 const AlertComponent = ({ message, alert, title, onConfirmPressed }) => {

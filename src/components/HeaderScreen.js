@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import Colors from '../utils/Colors';
+import { Colors } from '../utils';
 
 const HeaderScreenComponent = ({ title }) => {
     return (

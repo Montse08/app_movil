@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Globals } from "../utils";
+import { Colors, Globals } from "../utils";
 import { CalendarList, LocaleConfig } from "react-native-calendars";
 import { FlatList, Text, View } from "react-native";
 import Modal from 'react-native-modal';
 import AwesomeAlert from "react-native-awesome-alerts";
 import moment from 'moment';
 import 'moment/locale/es-mx';
-import Colors from "../utils/Colors";
 import { Card } from "react-native-elements";
 import FormButton from "./FormButton";
 
