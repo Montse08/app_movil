@@ -28,7 +28,6 @@ export const register = async user => {
 export const login = async credentials => {
     return await axios.post(`${Constants.URL}${Constants.ROUTES.users}token/`, credentials).then(
         async response => {
-            console.log(response.data);
             await UserCache.setToken(response.data.access);
             return Technical.getProfile();
         }

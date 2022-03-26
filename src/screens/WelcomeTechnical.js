@@ -6,7 +6,7 @@ import { Picker } from '@react-native-picker/picker';
 import FormButton from '../components/FormButton';
 import moment from 'moment';
 import 'moment/locale/es-mx';
-import { ConectionApi } from '../utils';
+import { Automobile, ConectionApi } from '../utils';
 
 const WelcomeTechnicalScreen = ({ navigation }) => {
     const [selectedValue, setSelectedValue] = useState(-1);
@@ -22,11 +22,11 @@ const WelcomeTechnicalScreen = ({ navigation }) => {
     }
 
     const getAutomobiles = async () => {
-        await ConectionApi.list_automobile().then(
-            resp => {
-                setAutomobiles(resp);
+        await Automobile.getAutomobiles().then(
+            response => {
+                setAutomobiles(response.data);
             }
-        );
+        )
     }
 
     useEffect(() => {

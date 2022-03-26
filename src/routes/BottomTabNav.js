@@ -2,28 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '../utils/Colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Menu } from '../utils';
+import { Menu, UserCache } from '../utils';
 import { ActivityIndicator, Text, View } from 'react-native';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
 const BottomTabNav = () => {
     const menu = Menu;
-    const [typeUser, setTypeUser] = useState('')
+    const [typeUser, setTypeUser] = useState([])
 
     const getUserType = async () => {
         try {
-            const data = await AsyncStorage.getItem('user_type');
-            setTypeUser(data);
+            const data = await UserCache.getUser();
+            setTypeUser(JSON.parse(data));
         } catch (error) {
             console.log(error);
         }
     }
 
     useEffect(() => {
-        getUserType()
-    })
+        getUserType();
+    }, [])
 
     const RenderIcon = ({ name, focus }) => {
         return (
@@ -45,7 +44,7 @@ const BottomTabNav = () => {
     }
 
     const renderNavigation = () => {
-        if (typeUser == '') {
+        if (typeUser.length == 0) {
             return (
                 <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
                     <ActivityIndicator size={40} color={Colors.PRIMARY_COLOR_AZULDELLOGO} />
@@ -55,14 +54,14 @@ const BottomTabNav = () => {
         } else {
             return (
                 <Navigator
-                    initialRouteName={typeUser == 'cliente' ? "Home" : "Services"}
+                    initialRouteName={typeUser.is_technical ? "Services" : "Home"}
                     screenOptions={{
                         headerShown: false,
                         tabBarStyle: {
                             backgroundColor: Colors.PRIMARY_COLOR_AZULDELLOGO
                         }
                     }} >
-                    {typeUser == 'cliente' ? (
+                    {!typeUser.is_technical ? (
                         menu.MenuClient.map((item, index) => renderScreen(item, index))
                     ) : (
                         menu.MenuTecnico.map((item, index) => renderScreen(item, index))

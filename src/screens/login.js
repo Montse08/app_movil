@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import Forminput from "../components/Forminput";
 import FormButton from "../components/FormButton";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Auth, ConectionApi, UserModel } from "../utils";
+import { Auth, UserModel } from "../utils";
 import { useForm, Controller } from 'react-hook-form';
 import { Alert } from "../components";
 
@@ -17,40 +16,35 @@ const Login = ({ navigation }) => {
     const [alertTitle, setAlertTitle] = useState('');
     const [messageAlert, setMessageAlert] = useState('');
 
-    const userType = async (user) => {
-        try {
-            await AsyncStorage.setItem('$data_user', JSON.stringify(user));
-            if (user.is_technical) {
-                navigation.navigate('Welcome');
-            } else {
-                navigation.navigate('Dashboard');
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     const onSubmit = async data => {
         await Auth.login(data).then(
             response => {
-                console.log(response);
+                setAlert(true);
+                if (response.status) {
+                    setAlertTitle('Bienvenido');
+                    setMessageAlert(response.message);
+                    setTimeout(() => {
+                        setAlert(false);
+                        if (response.data.is_technical) {
+                            navigation.navigate('Welcome');
+                        } else {
+                            navigation.navigate('Dashboard');
+                        }
+                    }, 3000);
+                } else {
+                    if (response.code == 400) {
+                        setAlertTitle('Datos incorrectos');
+                        setMessageAlert(response.message);
+                    } else {
+                        setAlertTitle('Ups!');
+                        setMessageAlert(response.message);
+                    }
+                }
+                setTimeout(() => {
+                    setAlert(false);
+                }, 3000);
             }
         )
-        // ConectionApi.login(data).then(resp => {
-        //     if (resp.status) {
-        //         if (resp.data.is_technical) {
-        //             userType(resp.data);
-        //         } else {
-        //             userType("cliente");
-        //         }
-        //     } else {
-        //         if (resp.code == 401) {
-        //             console.log(resp.code);
-        //         } else {
-        //             console.log(resp.code);
-        //         }
-        //     }
-        // });
     }
 
     return (

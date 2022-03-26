@@ -4,13 +4,12 @@ import { Constants } from "../../config";
 
 const getToken = async () => await UserCache.getToken();
 
-export const getProfile = async () => {
+export const getAutomobiles = async () => {
     let token = await getToken();
-    return await axios.get(`${Constants.URL}${Constants.ROUTES.users}profile-mobile/`, { headers: { Authorization: `JWT ${token}` } })
+    return await axios.get(`${Constants.URL}${Constants.ROUTES.automobiles}automobiles-mobile/`, { headers: { Authorization: `JWT ${token}` } })
         .then(
-            async response => {
-                await UserCache.setUser(response.data);
-                return { status: true, message: `Hola ${response.data.name}`, code: response.status, data: response.data };
+            response => {
+                return { data: response.data.results };
             }
         )
         .catch(
